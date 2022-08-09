@@ -1,0 +1,16 @@
+.card {
+  width: 400px;
+  margin: 20px;
+  border-radius: 20px;
+  padding: 5px;
+}
+
+.card.debit {
+  background-color: blue;
+  color: aliceblue;
+}
+
+.card.credit {
+  background-color: green;
+  color: darkseagreen;
+}
