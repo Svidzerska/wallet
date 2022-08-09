@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "./App.css";
+import "./App.scss";
+
+import AsideInfo from "./components/AsideInfo/AsideInfo";
 
 const App: React.FC = (): JSX.Element => {
   const [response, setResponse] = useState<string>("");
@@ -46,18 +48,18 @@ const App: React.FC = (): JSX.Element => {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <p>{response}</p>
-        <form onSubmit={handleSubmit}>
-          <p>
-            <strong>Post to Server:</strong>
-          </p>
-          <input type="text" value={post} onChange={(e) => setPost(e.target.value)} />
-          <br />
-          <button type="submit">Submit</button>
-        </form>
-        <p>{responseToPost}</p>
-      </header>
+      <header className="App-header">All your money here</header>
+      <AsideInfo />
+      <p>{response}</p>
+      <form onSubmit={handleSubmit}>
+        <p>
+          <strong>Post to Server:</strong>
+        </p>
+        <input type="text" value={post} onChange={(e) => setPost(e.target.value)} />
+        <br />
+        <button type="submit">Submit</button>
+      </form>
+      <p>{responseToPost}</p>
     </div>
   );
 };
