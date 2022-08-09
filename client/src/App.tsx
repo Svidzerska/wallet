@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.scss";
 
 import AsideInfo from "./components/AsideInfo/AsideInfo";
+import MainInfo from "./components/MainInfo/MainInfo";
 
 const App: React.FC = (): JSX.Element => {
   const [response, setResponse] = useState<string>("");
@@ -47,9 +48,12 @@ const App: React.FC = (): JSX.Element => {
   };
 
   return (
-    <div className="App">
+    <>
       <header className="App-header">All your money here</header>
-      <AsideInfo />
+      <section className="App-info">
+        <AsideInfo />
+        <MainInfo />
+      </section>
       <p>{response}</p>
       <form onSubmit={handleSubmit}>
         <p>
@@ -60,7 +64,7 @@ const App: React.FC = (): JSX.Element => {
         <button type="submit">Submit</button>
       </form>
       <p>{responseToPost}</p>
-    </div>
+    </>
   );
 };
 

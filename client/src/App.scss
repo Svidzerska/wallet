@@ -12,6 +12,11 @@
   font-family: "Caveat";
 }
 
+.App-info {
+  display: flex;
+  flex-direction: row;
+}
+
 form {
   input,
   button {
