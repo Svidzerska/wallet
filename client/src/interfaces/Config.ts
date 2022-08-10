@@ -1,5 +1,3 @@
-import { FunctionDeclaration, FunctionExpression } from "typescript";
-
 export interface Config {
   fieldName: string;
   type: string;

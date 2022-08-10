@@ -4,9 +4,9 @@ import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 import "./card.scss";
 
 interface Props {
-  number: number;
+  number: string;
   expire_date: string;
-  value: number;
+  value: string;
   currency: string;
   payment_sys: string;
   card_type: string;

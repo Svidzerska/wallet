@@ -7,21 +7,24 @@ import "./formBuilder.scss";
 import { Config } from "../../../interfaces/Config";
 import { ValidationResult } from "../../../interfaces/ValidationResult";
 import Select from "../select/Select";
+import { Card } from "../../../interfaces/Card";
 
 interface Props {
   config: Config[];
   formName: string;
   formActionName: string;
   onSubmitToDo: Function;
+  getCard: Function;
 }
 
-const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubmitToDo }): JSX.Element => {
+const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubmitToDo, getCard }): JSX.Element => {
   const [values, setValues] = useState<{ [id: string]: string }>({});
   const [isValid, setValid] = useState<boolean>(false);
 
   useEffect(() => {
     console.log(values);
     validInputsArray.includes(false) ? setValid(false) : setValid(true);
+    getCard(values);
   }, [values]);
 
   //form consist of
