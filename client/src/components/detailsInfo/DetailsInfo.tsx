@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
 import "./detailsInfo.scss";
 
-import { getCards, setAddCard } from "../../features/cards/cardsSlice";
+import { deleteCard, getCards, setAddCard } from "../../features/cards/cardsSlice";
 
 import CardComponent from "./card/Card";
 import AddCard from "./formAddCard/addCard/AddCard";
@@ -14,10 +14,15 @@ const DetailsInfo: React.FC = (): JSX.Element => {
 
   const isAddCard: boolean = useAppSelector((state) => state.cards.isAddCard);
   const cardsFromServer: Card[] = useAppSelector((state) => state.cards.cardsFromServer);
+  const deletedCard: string = useAppSelector((state) => state.cards.deletedCard);
 
   useEffect(() => {
-    dispatch(getCards());
-  }, []);
+    console.log(deletedCard);
+  }, [deletedCard]);
+
+  useEffect(() => {
+    !isAddCard && dispatch(getCards());
+  }, [, isAddCard, deletedCard]);
 
   useEffect(() => {
     console.log(cardsFromServer);
@@ -31,16 +36,26 @@ const DetailsInfo: React.FC = (): JSX.Element => {
     dispatch(setAddCard(false));
   };
 
-  const cardsList: JSX.Element[] = cardsFromServer.map((card: Card) => {
+  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    console.log(e.currentTarget.id);
+    dispatch(deleteCard(e.currentTarget.id));
+  };
+
+  const cardsList: JSX.Element[] = cardsFromServer.map((card: Card, index: number) => {
     return (
-      <CardComponent
-        number={card.card_number}
-        expire_date={card.expire_date}
-        value={card.amount}
-        currency={card.currency}
-        payment_sys={"Visa"}
-        card_type={"debit"}
-      />
+      <li key={`${card.card_number}${index}`} className="cardElement">
+        <CardComponent
+          number={card.card_number}
+          expire_date={card.exp_date}
+          value={card.amount}
+          currency={card.currency}
+          scheme={card.scheme}
+          type={card.type}
+        />
+        <button onClick={handleDelete} id={`${card.id}`}>
+          Видалити
+        </button>
+      </li>
     );
   });
 
@@ -55,7 +70,7 @@ const DetailsInfo: React.FC = (): JSX.Element => {
         <section className="detailsInfo__section">
           <button onClick={addCard}>Додати картку</button>
           <button>Додати готівку</button>
-          {cardsList}
+          <ul className="cardList">{cardsList}</ul>
         </section>
       )}
     </>

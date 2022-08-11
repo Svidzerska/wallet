@@ -1,8 +1,33 @@
 .card {
-  width: 400px;
+  width: 350px;
+  height: 200px;
   margin: 20px;
   border-radius: 20px;
-  padding: 5px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: content-box;
+
+  button {
+    width: 350px;
+    background: none;
+    border: 0;
+  }
+  .cardType {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0;
+    p {
+      margin: 0;
+    }
+  }
+
+  h2,
+  h3 {
+    margin: 0;
+  }
 }
 
 .card.debit {

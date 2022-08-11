@@ -4,27 +4,42 @@ import NumberFormat from "react-number-format";
 
 import "./formBuilder.scss";
 
+import { getAddCardInfo, setCurrentCard } from "../../../features/cards/cardsSlice";
+
 import { Config } from "../../../interfaces/Config";
-import { ValidationResult } from "../../../interfaces/ValidationResult";
-import Select from "../select/Select";
 import { Card } from "../../../interfaces/Card";
+import { ValidationResult } from "../../../interfaces/ValidationResult";
+
+import Select from "../select/Select";
 
 interface Props {
   config: Config[];
   formName: string;
   formActionName: string;
   onSubmitToDo: Function;
-  getCard: Function;
 }
 
-const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubmitToDo, getCard }): JSX.Element => {
-  const [values, setValues] = useState<{ [id: string]: string }>({});
+const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubmitToDo }): JSX.Element => {
+  const dispatch = useAppDispatch();
+
+  const [values, setValues] = useState<Card>({});
   const [isValid, setValid] = useState<boolean>(false);
 
+  const addCardInfo: { scheme: string; type: string } = useAppSelector((state) => state.cards.addCardInfo);
+
   useEffect(() => {
-    console.log(values);
+    dispatch(setCurrentCard({ ...values, ...addCardInfo }));
+  }, [addCardInfo, values]);
+
+  useEffect(() => {
+    if (isValid) {
+      const digit = `${values?.card_number?.substring(0, 4)}${values?.card_number?.substring(5, 9)}`;
+      dispatch(getAddCardInfo(digit));
+    }
+  }, [isValid]);
+
+  useEffect(() => {
     validInputsArray.includes(false) ? setValid(false) : setValid(true);
-    getCard(values);
   }, [values]);
 
   //form consist of

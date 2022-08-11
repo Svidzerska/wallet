@@ -8,6 +8,19 @@
   width: 70%;
   font-family: "Roboto";
 
+  .cardList {
+    list-style-type: none;
+    .cardElement {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      button {
+        margin-top: 20px;
+      }
+    }
+  }
+
   button {
     width: 200px;
     height: 40px;

@@ -24,12 +24,23 @@ export const cardApi = {
   getAddCardInfo: async (digit: string) => {
     try {
       const result = await fetch(`https://lookup.binlist.net/${digit}`);
-      console.log(result);
       const json = await result.json();
-      return json;
+      console.log(json);
+      return { scheme: json.scheme, type: json.type };
     } catch (err) {
       console.log(err);
       return false;
     }
+  },
+  deleteCard: async (id: string) => {
+    const response = await fetch(`/api/cards/${id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    const body = await response.text();
+    return body;
   },
 };

@@ -5,16 +5,20 @@ import { cardApi } from "../../api/cardApi";
 
 interface InitialState {
   isAddCard: boolean;
+  currentCard: Card | null;
   savedCard: Card | null;
   cardsFromServer: Card[];
-  addCardInfo: any;
+  addCardInfo: { scheme: string; type: string };
+  deletedCard: string;
 }
 
 const initialState: InitialState = {
   isAddCard: false,
+  currentCard: null,
   savedCard: null,
   cardsFromServer: [],
-  addCardInfo: null,
+  addCardInfo: { scheme: "", type: "" },
+  deletedCard: "",
 };
 
 export const saveCard = createAsyncThunk<any, Card>("card/saveCard", async (card: Card) => {
@@ -33,9 +37,18 @@ export const getCards = createAsyncThunk<any>("cards/getCards", async () => {
     .catch((err) => console.log(err)) as Promise<any>;
 });
 
-export const getAddCardInfo = createAsyncThunk<any, string>("addCardInfo/getAddCardInfo", async (digit: string) => {
-  return cardApi.getAddCardInfo(digit)?.then((data: any) => {
-    console.log(data);
+export const getAddCardInfo = createAsyncThunk<{ scheme: string; type: string }, string>(
+  "addCardInfo/getAddCardInfo",
+  async (digit: string) => {
+    return cardApi.getAddCardInfo(digit)?.then((data: any) => {
+      console.log(data);
+      return data; //payload - data
+    }) as Promise<{ scheme: string; type: string }>;
+  }
+);
+
+export const deleteCard = createAsyncThunk<any, string>("card/deleteCard", async (id: string) => {
+  return cardApi.deleteCard(id)?.then((data: any) => {
     return data; //payload - data
   }) as Promise<any>;
 });
@@ -46,6 +59,9 @@ export const cardsSlice = createSlice({
   reducers: {
     setAddCard: (state: InitialState, action: PayloadAction<boolean>) => {
       state.isAddCard = action.payload;
+    },
+    setCurrentCard: (state: InitialState, action: PayloadAction<Card | null>) => {
+      state.currentCard = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -73,14 +89,24 @@ export const cardsSlice = createSlice({
       state.addCardInfo = action.payload;
     });
     builder.addCase(getAddCardInfo.pending, (state, _action) => {
-      state.addCardInfo = null;
+      state.addCardInfo = { scheme: "", type: "" };
     });
     builder.addCase(getAddCardInfo.rejected, (state, _action) => {
-      state.addCardInfo = null;
+      state.addCardInfo = { scheme: "", type: "" };
+    });
+
+    builder.addCase(deleteCard.fulfilled, (state, action) => {
+      state.deletedCard = action.payload;
+    });
+    builder.addCase(deleteCard.pending, (state, _action) => {
+      state.deletedCard = "";
+    });
+    builder.addCase(deleteCard.rejected, (state, _action) => {
+      state.deletedCard = "";
     });
   },
 });
 
-export const { setAddCard } = cardsSlice.actions;
+export const { setAddCard, setCurrentCard } = cardsSlice.actions;
 
 export default cardsSlice.reducer;
