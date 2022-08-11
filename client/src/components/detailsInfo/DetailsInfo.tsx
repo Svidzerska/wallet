@@ -18,15 +18,12 @@ const DetailsInfo: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     console.log(deletedCard);
+    // JSON.parse(deletedCard);
   }, [deletedCard]);
 
   useEffect(() => {
     !isAddCard && dispatch(getCards());
   }, [, isAddCard, deletedCard]);
-
-  useEffect(() => {
-    console.log(cardsFromServer);
-  }, [cardsFromServer]);
 
   const addCard = (): void => {
     dispatch(setAddCard(true));

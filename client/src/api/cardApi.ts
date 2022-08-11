@@ -40,7 +40,7 @@ export const cardApi = {
         "Content-Type": "application/json",
       },
     });
-    const body = await response.text();
+    const body = await response.json();
     return body;
   },
 };

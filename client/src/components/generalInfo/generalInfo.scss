@@ -2,7 +2,7 @@
   margin-bottom: 50px;
   margin-left: 50px;
   padding: 10px;
-  width: 30%;
+  width: 100%;
   text-align: start;
   background-color: rgb(255, 236, 199, 0.7);
   border: 1px solid rgb(0, 68, 0);
@@ -10,5 +10,64 @@
 
   .balance {
     font-family: "Roboto";
+    margin-left: 40px;
+  }
+
+  .money {
+    font-family: "Roboto";
+    box-shadow: 5px 5px 10px 5px orange;
+    width: 50%;
+    padding: 5px;
+    padding-left: 20px;
+    font-size: 30px;
+    margin-left: 40px;
+  }
+
+  .cash {
+    margin-left: 40px;
+  }
+
+  .cards {
+    text-align: center;
+    font-family: "Roboto";
+    font-style: italic;
+    font-size: 28px;
+  }
+
+  ul {
+    list-style-type: georgian;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0;
+
+    .cardShortInfo {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: baseline;
+      margin: 20px;
+
+      button {
+        width: 150px;
+        font-size: 20px;
+        margin-left: 10px;
+      }
+
+      p {
+        font-size: 26px;
+      }
+    }
+
+    .editButton {
+      height: 40px;
+    }
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .generalInfo__section {
+    margin-bottom: 0;
+    margin-right: 50px;
   }
 }

@@ -102,6 +102,7 @@ const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubm
               id={name}
               placeholder={field.placeholder}
               format={field.format}
+              defaultValue="0000000000000000"
               value={values[name] ? values[name] : ""}
               mask={field.mask}
               onChange={handleChange}
