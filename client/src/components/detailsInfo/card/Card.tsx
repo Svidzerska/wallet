@@ -52,7 +52,7 @@ const Card: React.FC<Props> = ({ number, expire_date, value, currency, scheme, t
         >
           {saveNumber()}
         </button>
-        <p>{isCopy && "copy"}</p>
+        <p className="copy_number">{isCopy && "copy"}</p>
       </h2>
       <h3>
         {value} {currency}

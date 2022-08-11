@@ -84,7 +84,7 @@ const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubm
               options={["UAH", "USD", "EUR"]}
               onChange={handleChange}
             />
-            <span>*</span>
+            <p>*</p>
           </>
         ) : field.fieldName === "card_holder" ? (
           <input
@@ -107,7 +107,7 @@ const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubm
               onChange={handleChange}
               required={field.required}
             />
-            <span>*</span>
+            <p>*</p>
           </>
         )}
         <br />

@@ -28,14 +28,37 @@
   h3 {
     margin: 0;
   }
+
+  .copy_number {
+    color: orange;
+    font-size: 18px;
+  }
 }
 
 .card.debit {
-  background-color: blue;
-  color: aliceblue;
+  background-image: url("../../../images/orange.jpg");
+  color: rgb(9, 54, 94);
+  background-size: cover;
+  button {
+    color: rgb(9, 54, 94);
+    font-size: 28px;
+  }
+  .copy_number {
+    color: green;
+    font-size: 18px;
+  }
 }
 
 .card.credit {
-  background-color: green;
-  color: darkseagreen;
+  background-image: url("../../../images/green.jpg");
+  background-size: cover;
+  color: white;
+  button {
+    color: white;
+    font-size: 28px;
+  }
+  .copy_number {
+    color: orange;
+    font-size: 18px;
+  }
 }
