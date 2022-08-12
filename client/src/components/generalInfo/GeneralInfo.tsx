@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { deleteCard, setAddCard, setEditCard } from "../../features/cards/cardsSlice";
+import { deleteCard, setAddCard, setEditingCard } from "../../features/cards/cardsSlice";
 import { Card } from "../../interfaces/Card";
 
 import "./generalInfo.scss";
@@ -63,7 +63,7 @@ const GeneralInfo: React.FC = (): JSX.Element => {
     dispatch(setAddCard(true));
     const editingCard = cardsFromServer.find((card) => card.id === e.currentTarget.id);
     console.log(editingCard);
-    dispatch(setEditCard(editingCard!));
+    dispatch(setEditingCard(editingCard!));
     // dispatch(deleteCard(e.currentTarget.id));
   };
 

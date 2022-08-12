@@ -43,4 +43,16 @@ export const cardApi = {
     const body = await response.json();
     return body;
   },
+  editCard: async (card: Card) => {
+    const response = await fetch(`/api/cards/${card.id}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ card: card }),
+    });
+    const body = await response.text();
+    console.log(body);
+  },
 };

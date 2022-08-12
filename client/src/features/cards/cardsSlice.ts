@@ -11,6 +11,7 @@ interface InitialState {
   cardsFromServer: Card[];
   addCardInfo: { scheme: string; type: string };
   deletedCard: string;
+  editedCard: string;
 }
 
 const initialState: InitialState = {
@@ -21,6 +22,7 @@ const initialState: InitialState = {
   cardsFromServer: [],
   addCardInfo: { scheme: "", type: "" },
   deletedCard: "",
+  editedCard: "",
 };
 
 export const saveCard = createAsyncThunk<any, Card>("card/saveCard", async (card: Card) => {
@@ -55,6 +57,12 @@ export const deleteCard = createAsyncThunk<any, string>("card/deleteCard", async
   }) as Promise<any>;
 });
 
+export const editCard = createAsyncThunk<any, Card>("card/editCard", async (card: Card) => {
+  return cardApi.editCard(card)?.then((data: any) => {
+    return data; //payload - data
+  }) as Promise<any>;
+});
+
 export const cardsSlice = createSlice({
   name: "cards",
   initialState,
@@ -62,7 +70,7 @@ export const cardsSlice = createSlice({
     setAddCard: (state: InitialState, action: PayloadAction<boolean>) => {
       state.isAddCard = action.payload;
     },
-    setEditCard: (state: InitialState, action: PayloadAction<Card | null>) => {
+    setEditingCard: (state: InitialState, action: PayloadAction<Card | null>) => {
       state.editingCard = action.payload;
     },
     setCurrentCard: (state: InitialState, action: PayloadAction<Card | null>) => {
@@ -112,6 +120,6 @@ export const cardsSlice = createSlice({
   },
 });
 
-export const { setAddCard, setEditCard, setCurrentCard } = cardsSlice.actions;
+export const { setAddCard, setEditingCard, setCurrentCard } = cardsSlice.actions;
 
 export default cardsSlice.reducer;

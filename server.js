@@ -23,6 +23,19 @@ app.post("/api/cards", (req, res) => {
   res.send(`I received your POST request. This is what you sent me: ${input.card}`);
 });
 
+app.put("/api/cards/:id", (req, res) => {
+  //card from server
+  let card = cards.find((card) => card.id === req.params.id);
+  let input = req.body.card;
+
+  for (let key in card) {
+    if (card[key] !== input[key]) {
+      card[key] = input[key];
+    }
+  }
+  res.send(`${req.params.id}`);
+});
+
 app.delete("/api/cards/:id", (req, res) => {
   console.log(req.params.id);
   res.send(JSON.stringify(cards.find((card) => card.id === req.params.id)));
