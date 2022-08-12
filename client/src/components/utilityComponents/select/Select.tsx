@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 interface Props {
   id: string;
@@ -9,18 +9,34 @@ interface Props {
 }
 
 const Select: React.FC<Props> = ({ id, name, required, options, onChange }): JSX.Element => {
+  console.log(options);
+
+  const [selectedOption, setSelectedOption] = useState(options[0]);
+
   const listOptions = options.map(function (option) {
     return (
-      <option key={option} value={option}>
+      <option key={option} value={option} label={option}>
         {option}
       </option>
     );
   });
 
   return (
-    <select id={id} name={name} required={required} onChange={(e) => onChange(e)}>
-      {listOptions}
-    </select>
+    <>
+      <label htmlFor={name}>Choose a currency:</label>
+      <select
+        id={id}
+        name={name}
+        required={required}
+        onChange={(e) => {
+          onChange(e);
+          setSelectedOption(e.currentTarget.value);
+        }}
+        value={selectedOption}
+      >
+        {listOptions}
+      </select>
+    </>
   );
 };
 

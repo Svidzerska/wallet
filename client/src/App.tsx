@@ -7,7 +7,7 @@ import DetailsInfo from "./components/detailsInfo/DetailsInfo";
 const App: React.FC = (): JSX.Element => {
   return (
     <>
-      <header className="App-header">All your money here</header>
+      <header className="App-header"> {`All your money here`} </header>
       <main className="App-info">
         <GeneralInfo />
         <DetailsInfo />
