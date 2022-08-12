@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { deleteCard, setAddCard } from "../../features/cards/cardsSlice";
+import { deleteCard, setAddCard, setEditCard } from "../../features/cards/cardsSlice";
 import { Card } from "../../interfaces/Card";
 
 import "./generalInfo.scss";
@@ -61,7 +61,10 @@ const GeneralInfo: React.FC = (): JSX.Element => {
 
   const handleEditCard = (e: React.MouseEvent<HTMLButtonElement>): void => {
     dispatch(setAddCard(true));
-    dispatch(deleteCard(e.currentTarget.id));
+    const editingCard = cardsFromServer.find((card) => card.id === e.currentTarget.id);
+    console.log(editingCard);
+    dispatch(setEditCard(editingCard!));
+    // dispatch(deleteCard(e.currentTarget.id));
   };
 
   const cardsList: JSX.Element[] = cardsFromServer.map((card: Card) => {

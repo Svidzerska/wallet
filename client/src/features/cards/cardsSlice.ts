@@ -5,7 +5,7 @@ import { cardApi } from "../../api/cardApi";
 
 interface InitialState {
   isAddCard: boolean;
-  isEditCard: boolean;
+  editingCard: Card | null;
   currentCard: Card | null;
   savedCard: Card | null;
   cardsFromServer: Card[];
@@ -15,7 +15,7 @@ interface InitialState {
 
 const initialState: InitialState = {
   isAddCard: false,
-  isEditCard: false,
+  editingCard: null,
   currentCard: null,
   savedCard: null,
   cardsFromServer: [],
@@ -62,8 +62,8 @@ export const cardsSlice = createSlice({
     setAddCard: (state: InitialState, action: PayloadAction<boolean>) => {
       state.isAddCard = action.payload;
     },
-    setEditCard: (state: InitialState, action: PayloadAction<boolean>) => {
-      state.isEditCard = action.payload;
+    setEditCard: (state: InitialState, action: PayloadAction<Card | null>) => {
+      state.editingCard = action.payload;
     },
     setCurrentCard: (state: InitialState, action: PayloadAction<Card | null>) => {
       state.currentCard = action.payload;
@@ -112,6 +112,6 @@ export const cardsSlice = createSlice({
   },
 });
 
-export const { setAddCard, setCurrentCard } = cardsSlice.actions;
+export const { setAddCard, setEditCard, setCurrentCard } = cardsSlice.actions;
 
 export default cardsSlice.reducer;

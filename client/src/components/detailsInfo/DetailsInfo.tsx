@@ -8,17 +8,18 @@ import { deleteCard, getCards, setAddCard } from "../../features/cards/cardsSlic
 import CardComponent from "./card/Card";
 import AddCard from "./formAddCard/addCard/AddCard";
 import { Card } from "../../interfaces/Card";
+import EditCard from "./formAddCard/editCard/EditCard";
 
 const DetailsInfo: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const isAddCard: boolean = useAppSelector((state) => state.cards.isAddCard);
+  const editingCard: Card | null = useAppSelector((state) => state.cards.editingCard);
   const cardsFromServer: Card[] = useAppSelector((state) => state.cards.cardsFromServer);
   const deletedCard: string = useAppSelector((state) => state.cards.deletedCard);
 
   useEffect(() => {
     console.log(deletedCard);
-    // JSON.parse(deletedCard);
   }, [deletedCard]);
 
   useEffect(() => {
@@ -60,7 +61,7 @@ const DetailsInfo: React.FC = (): JSX.Element => {
     <>
       {isAddCard ? (
         <section className="addCard__section">
-          <AddCard />
+          {!editingCard ? <AddCard /> : <EditCard editingCard={editingCard} />}
           <button onClick={cancelAddCard}>Скасувати</button>
         </section>
       ) : (

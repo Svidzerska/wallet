@@ -17,12 +17,13 @@ interface Props {
   formName: string;
   formActionName: string;
   onSubmitToDo: Function;
+  autoFill?: Card;
 }
 
-const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubmitToDo }): JSX.Element => {
+const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubmitToDo, autoFill }): JSX.Element => {
   const dispatch = useAppDispatch();
 
-  const [values, setValues] = useState<Card>({});
+  const [values, setValues] = useState<Card>(autoFill ? autoFill : {});
   const [isValid, setValid] = useState<boolean>(false);
 
   const addCardInfo: { scheme: string; type: string } = useAppSelector((state) => state.cards.addCardInfo);
@@ -39,6 +40,7 @@ const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubm
   }, [isValid]);
 
   useEffect(() => {
+    console.log(values);
     validInputsArray.includes(false) ? setValid(false) : setValid(true);
   }, [values]);
 
@@ -92,7 +94,7 @@ const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubm
             key={name}
             id={name}
             placeholder={field.placeholder}
-            value={values[name] ? values[name] : ""}
+            value={values[name]}
             onChange={handleChange}
             required={field.required}
           />
@@ -103,8 +105,7 @@ const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubm
               id={name}
               placeholder={field.placeholder}
               format={field.format}
-              defaultValue="0000000000000000"
-              value={values[name] ? values[name] : ""}
+              value={values[name]}
               mask={field.mask}
               onChange={handleChange}
               required={field.required}
