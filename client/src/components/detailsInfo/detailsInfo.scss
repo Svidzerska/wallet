@@ -23,6 +23,10 @@
     }
   }
 
+  .addCardButton {
+    width: 250px;
+  }
+
   button {
     width: 200px;
     height: 40px;
@@ -35,6 +39,9 @@
   .detailsInfo__section,
   .addCard__section {
     padding: 30px;
+    .addCardButton {
+      width: 200px;
+    }
   }
 }
 

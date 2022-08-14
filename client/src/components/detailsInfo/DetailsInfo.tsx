@@ -67,8 +67,10 @@ const DetailsInfo: React.FC = (): JSX.Element => {
         </section>
       ) : (
         <section className="detailsInfo__section">
-          <button onClick={addCard}>Додати картку</button>
-          <button>Додати готівку</button>
+          <button onClick={addCard} className="addCardButton">
+            Додати картку
+          </button>
+          <button className="addCardButton">Додати готівку</button>
           <ul className="cardList">{cardsList}</ul>
         </section>
       )}
