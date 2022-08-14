@@ -20,6 +20,7 @@ const EditCard: React.FC<Props> = ({ editingCard }): JSX.Element => {
 
   useEffect(() => {
     console.log(currentCard);
+    console.log(currentCard?.currency);
     console.log(editingCard);
   }, [currentCard]);
 

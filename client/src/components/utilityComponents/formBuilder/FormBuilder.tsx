@@ -86,6 +86,7 @@ const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubm
               required={true}
               options={["UAH", "USD", "EUR"]}
               onChange={handleChange}
+              currentState={autoFill?.currency}
             />
             <p>*</p>
           </>
