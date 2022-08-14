@@ -48,26 +48,109 @@
       align-items: baseline;
       margin: 20px;
 
-      button {
+      .editButton {
         width: 150px;
         font-size: 20px;
         margin-left: 10px;
+        height: 40px;
       }
 
       p {
         font-size: 26px;
       }
     }
-
-    .editButton {
-      height: 40px;
-    }
   }
 }
 
 @media screen and (max-width: 1400px) {
   .generalInfo__section {
+    .balance {
+      margin-left: 10px;
+    }
+
+    .cash {
+      margin-left: 10px;
+    }
+
+    .money {
+      font-size: 24px;
+    }
+    ul {
+      .cardShortInfo {
+        align-items: center;
+        p {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .generalInfo__section {
+    .money {
+      font-size: 20px;
+    }
+    ul {
+      .cardShortInfo {
+        margin: 10px;
+        align-items: center;
+        p {
+          font-size: 14px;
+        }
+        .editButton {
+          width: 100px;
+          height: 30px;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .generalInfo__section {
+    margin-left: 0;
     margin-bottom: 0;
-    margin-right: 50px;
+    width: auto;
+    .money {
+      font-size: 20px;
+    }
+    ul {
+      .cardShortInfo {
+        margin: 10px;
+        align-items: center;
+        p {
+          font-size: 20px;
+        }
+        .editButton {
+          width: 150px;
+          height: 30px;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .generalInfo__section {
+    .money {
+      font-size: 20px;
+    }
+    ul {
+      .cardShortInfo {
+        margin: 10px;
+        align-items: center;
+        p {
+          font-size: 14px;
+        }
+        .editButton {
+          width: 100px;
+          height: 30px;
+          font-size: 14px;
+        }
+      }
+    }
   }
 }

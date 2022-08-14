@@ -24,3 +24,13 @@ form {
     }
   }
 }
+
+@media screen and (max-width: 900px) {
+  form {
+    fieldset {
+      select {
+        height: 40px;
+      }
+    }
+  }
+}

@@ -51,7 +51,7 @@ const DetailsInfo: React.FC = (): JSX.Element => {
           scheme={card.scheme}
           type={card.type}
         />
-        <button onClick={handleDelete} id={`${card.id}`}>
+        <button onClick={handleDelete} id={`${card.id}`} className="deleteCard">
           Видалити
         </button>
       </li>
