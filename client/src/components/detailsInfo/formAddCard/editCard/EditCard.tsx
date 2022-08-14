@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 
 import "./editCard.scss";
 
-import { editCard, saveCard, setAddCard, setEditingCard } from "../../../../features/cards/cardsSlice";
+import { editCard, setAddCard, setEditingCard } from "../../../../features/cards/cardsSlice";
 
 import { configFormAddCard } from "../configFormAddCard/configFormAddCard";
 import FormBuilder from "../../../utilityComponents/formBuilder/FormBuilder";

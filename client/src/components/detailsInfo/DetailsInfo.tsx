@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
 import "./detailsInfo.scss";
 
-import { deleteCard, getCards, setAddCard } from "../../features/cards/cardsSlice";
+import { deleteCard, getCards, setAddCard, setEditingCard } from "../../features/cards/cardsSlice";
 
 import CardComponent from "./card/Card";
 import AddCard from "./formAddCard/addCard/AddCard";
@@ -32,6 +32,7 @@ const DetailsInfo: React.FC = (): JSX.Element => {
 
   const cancelAddCard = (): void => {
     dispatch(setAddCard(false));
+    dispatch(setEditingCard(null));
   };
 
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement>): void => {
