@@ -27,9 +27,10 @@ const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubm
   const [isValid, setValid] = useState<boolean>(false);
 
   const addCardInfo: { scheme: string; type: string } = useAppSelector((state) => state.cards.addCardInfo);
+  const isAddCash: boolean = useAppSelector((state) => state.cash.isAddCash);
 
   useEffect(() => {
-    dispatch(setCurrentCard({ ...values, ...addCardInfo }));
+    !isAddCash && dispatch(setCurrentCard({ ...values, ...addCardInfo }));
   }, [addCardInfo, values]);
 
   useEffect(() => {
