@@ -4,11 +4,14 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import "./detailsInfo.scss";
 
 import { deleteCard, getCards, setAddCard, setEditingCard } from "../../features/cards/cardsSlice";
+import { setAddCash } from "../../features/cash/cashSlice";
+
+import { Card } from "../../interfaces/Card";
 
 import CardComponent from "./card/Card";
 import AddCard from "./formAddCard/addCard/AddCard";
-import { Card } from "../../interfaces/Card";
 import EditCard from "./formAddCard/editCard/EditCard";
+import AddCash from "./formAddCard/addCash/AddCash";
 
 const DetailsInfo: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -18,6 +21,8 @@ const DetailsInfo: React.FC = (): JSX.Element => {
   const cardsFromServer: Card[] = useAppSelector((state) => state.cards.cardsFromServer);
   const deletedCard: string = useAppSelector((state) => state.cards.deletedCard);
 
+  const isAddCash: boolean = useAppSelector((state) => state.cash.isAddCash);
+
   useEffect(() => {
     console.log(deletedCard);
   }, [deletedCard]);
@@ -26,6 +31,10 @@ const DetailsInfo: React.FC = (): JSX.Element => {
     !isAddCard && dispatch(getCards());
   }, [, isAddCard, deletedCard]);
 
+  useEffect(() => {
+    document.body.style.overflow = isAddCash ? "hidden" : "auto";
+  }, [isAddCash]);
+
   const addCard = (): void => {
     dispatch(setAddCard(true));
   };
@@ -33,6 +42,10 @@ const DetailsInfo: React.FC = (): JSX.Element => {
   const cancelAddCard = (): void => {
     dispatch(setAddCard(false));
     dispatch(setEditingCard(null));
+  };
+
+  const addCash = (): void => {
+    dispatch(setAddCash(true));
   };
 
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement>): void => {
@@ -70,10 +83,13 @@ const DetailsInfo: React.FC = (): JSX.Element => {
           <button onClick={addCard} className="addCardButton">
             Додати картку
           </button>
-          <button className="addCardButton">Додати готівку</button>
+          <button onClick={addCash} className="addCardButton">
+            Додати готівку
+          </button>
           <ul className="cardList">{cardsList}</ul>
         </section>
       )}
+      {isAddCash && <AddCash />}
     </>
   );
 };
