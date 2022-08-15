@@ -29,7 +29,14 @@ const EditCard: React.FC<Props> = ({ editingCard }): JSX.Element => {
     dispatch(setCurrentCard({ ...currentCard, ...addCardInfo }));
   }, [addCardInfo]);
 
+  useEffect(() => {
+    const number = currentCard?.card_number;
+    const digit = `${number?.substring(0, 4)}${number?.substring(5, 9)}`;
+    number && dispatch(getAddCardInfo(digit));
+  }, [currentCard?.card_number]);
+
   const handleSaveEdit = (e: React.FormEvent<HTMLInputElement>): void => {
+    console.log(addCardInfo);
     e.preventDefault();
     dispatch(setAddCard(false));
     if (
@@ -42,9 +49,7 @@ const EditCard: React.FC<Props> = ({ editingCard }): JSX.Element => {
   };
 
   const getAditionInfoForCard = (values: Card): void => {
-    const digit = `${values?.card_number?.substring(0, 4)}${values?.card_number?.substring(5, 9)}`;
-    dispatch(getAddCardInfo(digit));
-    dispatch(setCurrentCard({ ...values }));
+    dispatch(setCurrentCard({ ...values, ...addCardInfo }));
   };
 
   return (

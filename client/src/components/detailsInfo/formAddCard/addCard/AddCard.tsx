@@ -19,6 +19,12 @@ const AddCard: React.FC = (): JSX.Element => {
     dispatch(setCurrentCard({ ...currentCard, ...addCardInfo }));
   }, [addCardInfo]);
 
+  useEffect(() => {
+    const number = currentCard?.card_number;
+    const digit = `${number?.substring(0, 4)}${number?.substring(5, 9)}`;
+    number && dispatch(getAddCardInfo(digit));
+  }, [currentCard?.card_number]);
+
   const handleSubmit = (e: React.FormEvent<HTMLInputElement>): void => {
     e.preventDefault();
     dispatch(setAddCard(false));
@@ -27,11 +33,8 @@ const AddCard: React.FC = (): JSX.Element => {
       : dispatch(saveCard({ ...currentCard, id: Math.random().toString(), currency: "UAH" }));
   };
 
-  //values?.card_number === currentCard?.card_number
   const getAditionInfoForCard = (values: Card): void => {
-    const digit = `${values?.card_number?.substring(0, 4)}${values?.card_number?.substring(5, 9)}`;
-    dispatch(getAddCardInfo(digit));
-    dispatch(setCurrentCard({ ...values }));
+    dispatch(setCurrentCard({ ...values, ...addCardInfo }));
   };
 
   return (
