@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
+
 import { deleteCard, setAddCard, setEditingCard } from "../../features/cards/cardsSlice";
+import { getCash } from "../../features/cash/cashSlice";
+
 import { Card } from "../../interfaces/Card";
+import { Cash } from "../../interfaces/Cash";
 
 import "./generalInfo.scss";
 
@@ -9,10 +13,19 @@ const GeneralInfo: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const cardsFromServer: Card[] = useAppSelector((state) => state.cards.cardsFromServer);
+  const cashFromServer: Cash[] = useAppSelector((state) => state.cash.cashFromServer);
 
   const [uah, setUah] = useState<number>(0);
   const [usd, setUsd] = useState<number>(0);
   const [eur, setEur] = useState<number>(0);
+
+  useEffect(() => {
+    dispatch(getCash());
+  }, []);
+
+  useEffect(() => {
+    console.log(cashFromServer);
+  }, [cashFromServer]);
 
   useEffect(() => {
     const cards = [...cardsFromServer];

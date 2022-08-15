@@ -10,7 +10,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //for this mongoDB should be used
 let cards = [];
+let cash = [];
 
+//cards
 app.get("/api/cards", (req, res) => {
   res.send({ express: cards });
 });
@@ -41,6 +43,18 @@ app.delete("/api/cards/:id", (req, res) => {
   res.send(JSON.stringify(cards.find((card) => card.id === req.params.id)));
   cards = cards.filter((card) => card.id !== req.params.id);
   // res.send(`I received your DELETE request. Card with id ${req.params.id} was deleted`);
+});
+
+//cash
+app.get("/api/cash", (req, res) => {
+  res.send({ express: cash });
+});
+
+app.post("/api/cash", (req, res) => {
+  let input = req.body;
+  console.log(input.cash);
+  cash.push(input.cash);
+  res.send(`I received your POST request. This is what you sent me: ${input.cash}`);
 });
 
 if (process.env.NODE_ENV === "production") {

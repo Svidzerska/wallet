@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import "./detailsInfo.scss";
 
 import { deleteCard, getCards, setAddCard, setEditingCard } from "../../features/cards/cardsSlice";
-import { setAddCash } from "../../features/cash/cashSlice";
+import { getCash, setAddCash } from "../../features/cash/cashSlice";
 
 import { Card } from "../../interfaces/Card";
 
@@ -42,6 +42,7 @@ const DetailsInfo: React.FC = (): JSX.Element => {
 
   const addCash = (): void => {
     dispatch(setAddCash(true));
+    dispatch(getCash());
   };
 
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement>): void => {
