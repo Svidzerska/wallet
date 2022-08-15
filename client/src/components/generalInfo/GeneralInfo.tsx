@@ -15,7 +15,6 @@ const GeneralInfo: React.FC = (): JSX.Element => {
   const [eur, setEur] = useState<number>(0);
 
   useEffect(() => {
-    console.log(cardsFromServer);
     const cards = [...cardsFromServer];
 
     const cardsUAH: number[] = cards.map((card) => {

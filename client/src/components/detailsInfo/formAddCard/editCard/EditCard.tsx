@@ -3,7 +3,13 @@ import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 
 import "./editCard.scss";
 
-import { editCard, setAddCard, setEditingCard } from "../../../../features/cards/cardsSlice";
+import {
+  editCard,
+  getAddCardInfo,
+  setAddCard,
+  setCurrentCard,
+  setEditingCard,
+} from "../../../../features/cards/cardsSlice";
 
 import { configFormAddCard } from "../configFormAddCard/configFormAddCard";
 import FormBuilder from "../../../utilityComponents/formBuilder/FormBuilder";
@@ -17,12 +23,11 @@ const EditCard: React.FC<Props> = ({ editingCard }): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const currentCard: Card | null = useAppSelector((state) => state.cards.currentCard);
+  const addCardInfo: { scheme: string; type: string } = useAppSelector((state) => state.cards.addCardInfo);
 
   useEffect(() => {
-    console.log(currentCard);
-    console.log(currentCard?.currency);
-    console.log(editingCard);
-  }, [currentCard]);
+    dispatch(setCurrentCard({ ...currentCard, ...addCardInfo }));
+  }, [addCardInfo]);
 
   const handleSaveEdit = (e: React.FormEvent<HTMLInputElement>): void => {
     e.preventDefault();
@@ -36,6 +41,12 @@ const EditCard: React.FC<Props> = ({ editingCard }): JSX.Element => {
     dispatch(setEditingCard(null));
   };
 
+  const getAditionInfoForCard = (values: Card): void => {
+    const digit = `${values?.card_number?.substring(0, 4)}${values?.card_number?.substring(5, 9)}`;
+    dispatch(getAddCardInfo(digit));
+    dispatch(setCurrentCard({ ...values }));
+  };
+
   return (
     <FormBuilder
       config={configFormAddCard}
@@ -43,6 +54,7 @@ const EditCard: React.FC<Props> = ({ editingCard }): JSX.Element => {
       formActionName="Зберегти зміни"
       onSubmitToDo={handleSaveEdit}
       autoFill={editingCard}
+      processInputValues={getAditionInfoForCard}
     />
   );
 };

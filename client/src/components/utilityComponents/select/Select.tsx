@@ -10,9 +10,6 @@ interface Props {
 }
 
 const Select: React.FC<Props> = ({ id, name, required, options, onChange, currentState }): JSX.Element => {
-  console.log(options);
-  console.log(currentState);
-
   const [selectedOption, setSelectedOption] = useState(currentState || options[0]);
 
   const listOptions = options.map(function (option) {

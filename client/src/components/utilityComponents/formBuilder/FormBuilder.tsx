@@ -18,27 +18,25 @@ interface Props {
   formActionName: string;
   onSubmitToDo: Function;
   autoFill?: Card;
+  processInputValues?: Function;
 }
 
-const FormBuilder: React.FC<Props> = ({ config, formName, formActionName, onSubmitToDo, autoFill }): JSX.Element => {
+const FormBuilder: React.FC<Props> = ({
+  config,
+  formName,
+  formActionName,
+  onSubmitToDo,
+  autoFill,
+  processInputValues,
+}): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const [values, setValues] = useState<Card>(autoFill ? autoFill : {});
   const [isValid, setValid] = useState<boolean>(false);
 
-  const addCardInfo: { scheme: string; type: string } = useAppSelector((state) => state.cards.addCardInfo);
-  const isAddCash: boolean = useAppSelector((state) => state.cash.isAddCash);
-
   useEffect(() => {
-    !isAddCash && dispatch(setCurrentCard({ ...values, ...addCardInfo }));
-  }, [addCardInfo, values]);
-
-  useEffect(() => {
-    if (isValid) {
-      const digit = `${values?.card_number?.substring(0, 4)}${values?.card_number?.substring(5, 9)}`;
-      dispatch(getAddCardInfo(digit));
-    }
-  }, [isValid]);
+    isValid && processInputValues && processInputValues(values);
+  }, [isValid, values]);
 
   useEffect(() => {
     console.log(values);

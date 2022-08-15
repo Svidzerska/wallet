@@ -35,7 +35,6 @@ export const getCards = createAsyncThunk<any>("cards/getCards", async () => {
   return cardApi
     .getCards()
     ?.then((res: any) => {
-      console.log(res.express);
       return res.express; //payload - data
     })
     .catch((err) => console.log(err)) as Promise<any>;
