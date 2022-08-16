@@ -50,7 +50,7 @@ export const cashSlice = createSlice({
     setCurrentCash: (state: InitialState, action: PayloadAction<Cash | null>) => {
       state.currentCash = action.payload;
     },
-    setEditingPocketCurrency: (state: InitialState, action: PayloadAction<Cash>) => {
+    setEditingPocket: (state: InitialState, action: PayloadAction<Cash>) => {
       state.editingPocket = action.payload;
     },
   },
@@ -77,6 +77,6 @@ export const cashSlice = createSlice({
   },
 });
 
-export const { setAddCash, setCurrentCash, setEditingPocketCurrency } = cashSlice.actions;
+export const { setAddCash, setCurrentCash, setEditingPocket } = cashSlice.actions;
 
 export default cashSlice.reducer;

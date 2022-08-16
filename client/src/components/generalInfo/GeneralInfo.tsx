@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
 import { deleteCard, setAddCard, setEditingCard } from "../../features/cards/cardsSlice";
-import { getCash, setAddCash, setEditingPocketCurrency } from "../../features/cash/cashSlice";
+import { getCash, setAddCash, setEditingPocket } from "../../features/cash/cashSlice";
 
 import { Card } from "../../interfaces/Card";
 import { Cash } from "../../interfaces/Cash";
@@ -125,7 +125,7 @@ const GeneralInfo: React.FC = (): JSX.Element => {
           className="editButton"
           onClick={() => {
             handleEdit();
-            dispatch(setEditingPocketCurrency(pocket!));
+            dispatch(setEditingPocket(pocket!));
           }}
         >
           Редагувати
