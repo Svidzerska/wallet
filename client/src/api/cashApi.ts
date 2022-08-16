@@ -21,4 +21,16 @@ export const cashApi = {
 
     return body;
   },
+  editCash: async (cashPocket: Cash) => {
+    const response = await fetch(`/api/cash/${cashPocket.currency}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ cashPocket: cashPocket }),
+    });
+    const body = await response.text();
+    console.log(body);
+  },
 };

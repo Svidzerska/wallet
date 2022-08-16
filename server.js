@@ -57,6 +57,20 @@ app.post("/api/cash", (req, res) => {
   res.send(`I received your POST request. This is what you sent me: ${input.cash}`);
 });
 
+app.put("/api/cash/:id", (req, res) => {
+  console.log(111111);
+  console.log(req.params.id);
+  let cashPocket = cash.find((cashPocket) => cashPocket.currency === req.params.id);
+  let input = req.body.cashPocket;
+
+  for (let key in cashPocket) {
+    if (cashPocket[key] !== input[key]) {
+      cashPocket[key] = input[key];
+    }
+  }
+  res.send(`${req.params.id}`);
+});
+
 if (process.env.NODE_ENV === "production") {
   // Serve any static files
   app.use(express.static(path.join(__dirname, "client/build")));

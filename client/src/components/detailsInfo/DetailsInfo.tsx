@@ -29,6 +29,7 @@ const DetailsInfo: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     document.body.style.overflow = isAddCash ? "hidden" : "auto";
+    !isAddCash && dispatch(getCash());
   }, [isAddCash]);
 
   const addCard = (): void => {
@@ -42,7 +43,6 @@ const DetailsInfo: React.FC = (): JSX.Element => {
 
   const addCash = (): void => {
     dispatch(setAddCash(true));
-    dispatch(getCash());
   };
 
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement>): void => {

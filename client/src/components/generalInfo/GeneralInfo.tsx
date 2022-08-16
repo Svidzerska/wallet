@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
 import { deleteCard, setAddCard, setEditingCard } from "../../features/cards/cardsSlice";
-import { getCash } from "../../features/cash/cashSlice";
+import { getCash, setAddCash, setEditingPocketCurrency } from "../../features/cash/cashSlice";
 
 import { Card } from "../../interfaces/Card";
 import { Cash } from "../../interfaces/Cash";
@@ -18,6 +18,18 @@ const GeneralInfo: React.FC = (): JSX.Element => {
   const [uah, setUah] = useState<number>(0);
   const [usd, setUsd] = useState<number>(0);
   const [eur, setEur] = useState<number>(0);
+
+  const [uahCash, setUahCash] = useState<number>(0);
+  const [usdCash, setUsdCash] = useState<number>(0);
+  const [eurCash, setEurCash] = useState<number>(0);
+
+  useEffect(() => {
+    cashFromServer.map((pocket) => {
+      pocket.currency === "UAH" && pocket.amount && setUahCash(+pocket.amount);
+      pocket.currency === "USD" && pocket.amount && setUsdCash(+pocket.amount);
+      pocket.currency === "EUR" && pocket.amount && setEurCash(+pocket.amount);
+    });
+  }, [cashFromServer]);
 
   useEffect(() => {
     dispatch(getCash());
@@ -68,7 +80,7 @@ const GeneralInfo: React.FC = (): JSX.Element => {
   }, [cardsFromServer]);
 
   const handleEdit = (): void => {
-    console.log(1111);
+    dispatch(setAddCash(true));
   };
 
   const handleEditCard = (e: React.MouseEvent<HTMLButtonElement>): void => {
@@ -103,6 +115,25 @@ const GeneralInfo: React.FC = (): JSX.Element => {
     );
   });
 
+  const cashPocketAmount = cashFromServer.map((pocket) => {
+    return (
+      <div key={pocket.currency}>
+        <p>
+          - {pocket.amount} {pocket.currency}
+        </p>
+        <button
+          className="editButton"
+          onClick={() => {
+            handleEdit();
+            dispatch(setEditingPocketCurrency(pocket!));
+          }}
+        >
+          Редагувати
+        </button>
+      </div>
+    );
+  });
+
   return (
     <section className="generalInfo__section">
       <h3 className="balance">Баланс</h3>
@@ -111,13 +142,9 @@ const GeneralInfo: React.FC = (): JSX.Element => {
         <p>- {usd} USD</p>
         <p>- {eur} EUR</p>
       </div>
-
       <section className="cash">
         <h3 className="cashName">Готівка</h3>
-        <p>- 0 UAH</p>
-        <button className="editButton" onClick={handleEdit}>
-          Редагувати
-        </button>
+        {cashPocketAmount}
       </section>
       <h3 className="cards">Мої Картки</h3>
       <ul>{cardsList}</ul>

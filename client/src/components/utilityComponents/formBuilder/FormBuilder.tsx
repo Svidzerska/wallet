@@ -8,6 +8,7 @@ import { getAddCardInfo, setCurrentCard } from "../../../features/cards/cardsSli
 
 import { Config } from "../../../interfaces/Config";
 import { Card } from "../../../interfaces/Card";
+import { Cash } from "../../../interfaces/Cash";
 import { ValidationResult } from "../../../interfaces/ValidationResult";
 
 import Select from "../select/Select";
@@ -17,7 +18,7 @@ interface Props {
   formName: string;
   formActionName: string;
   onSubmitToDo: Function;
-  autoFill?: Card;
+  autoFill?: Card | Cash;
   processInputValues?: Function;
 }
 

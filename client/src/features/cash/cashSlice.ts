@@ -8,6 +8,7 @@ interface InitialState {
   currentCash: Cash | null;
   savedCash: Cash | null;
   cashFromServer: Cash[];
+  editingPocket: Cash;
 }
 
 const initialState: InitialState = {
@@ -15,6 +16,7 @@ const initialState: InitialState = {
   currentCash: null,
   savedCash: null,
   cashFromServer: [],
+  editingPocket: {},
 };
 
 export const saveCash = createAsyncThunk<any, Cash>("cash/saveCash", async (cash: Cash) => {
@@ -32,6 +34,12 @@ export const getCash = createAsyncThunk<any>("cash/getCash", async () => {
     .catch((err) => console.log(err)) as Promise<any>;
 });
 
+export const editCash = createAsyncThunk<any, Cash>("card/editCard", async (cashPocket: Cash) => {
+  return cashApi.editCash(cashPocket)?.then((data: any) => {
+    return data; //payload - data
+  }) as Promise<any>;
+});
+
 export const cashSlice = createSlice({
   name: "cash",
   initialState,
@@ -41,6 +49,9 @@ export const cashSlice = createSlice({
     },
     setCurrentCash: (state: InitialState, action: PayloadAction<Cash | null>) => {
       state.currentCash = action.payload;
+    },
+    setEditingPocketCurrency: (state: InitialState, action: PayloadAction<Cash>) => {
+      state.editingPocket = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -66,6 +77,6 @@ export const cashSlice = createSlice({
   },
 });
 
-export const { setAddCash, setCurrentCash } = cashSlice.actions;
+export const { setAddCash, setCurrentCash, setEditingPocketCurrency } = cashSlice.actions;
 
 export default cashSlice.reducer;
