@@ -19,21 +19,9 @@ const GeneralInfo: React.FC = (): JSX.Element => {
   const [usd, setUsd] = useState<number>(0);
   const [eur, setEur] = useState<number>(0);
 
-  const [uahCash, setUahCash] = useState<number>(0);
-  const [usdCash, setUsdCash] = useState<number>(0);
-  const [eurCash, setEurCash] = useState<number>(0);
-
-  useEffect(() => {
-    cashFromServer.map((pocket) => {
-      pocket.currency === "UAH" && pocket.amount && setUahCash(+pocket.amount);
-      pocket.currency === "USD" && pocket.amount && setUsdCash(+pocket.amount);
-      pocket.currency === "EUR" && pocket.amount && setEurCash(+pocket.amount);
-    });
-  }, [cashFromServer]);
-
-  useEffect(() => {
-    dispatch(getCash());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getCash());
+  // }, []);
 
   useEffect(() => {
     console.log(cashFromServer);

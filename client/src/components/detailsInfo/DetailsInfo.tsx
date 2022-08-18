@@ -24,13 +24,15 @@ const DetailsInfo: React.FC = (): JSX.Element => {
   const isAddCash: boolean = useAppSelector((state) => state.cash.isAddCash);
 
   useEffect(() => {
+    console.log(isAddCard);
     !isAddCard && dispatch(getCards());
   }, [, isAddCard, deletedCard]);
 
   useEffect(() => {
+    console.log(isAddCash);
     document.body.style.overflow = isAddCash ? "hidden" : "auto";
     !isAddCash && dispatch(getCash());
-  }, [isAddCash]);
+  }, [, isAddCash]);
 
   const addCard = (): void => {
     dispatch(setAddCard(true));
