@@ -7,6 +7,7 @@ import { deleteCard, getCards, setAddCard, setEditingCard } from "../../features
 import { getCash, setAddCash } from "../../features/cash/cashSlice";
 
 import { Card } from "../../interfaces/Card";
+import { Cash } from "../../interfaces/Cash";
 
 import CardComponent from "./card/Card";
 import AddCard from "./formAddCard/addCard/AddCard";
@@ -22,6 +23,7 @@ const DetailsInfo: React.FC = (): JSX.Element => {
   const deletedCard: string = useAppSelector((state) => state.cards.deletedCard);
 
   const isAddCash: boolean = useAppSelector((state) => state.cash.isAddCash);
+  const savedCash: Cash | null = useAppSelector((state) => state.cash.savedCash);
 
   useEffect(() => {
     console.log(isAddCard);
@@ -33,6 +35,10 @@ const DetailsInfo: React.FC = (): JSX.Element => {
     document.body.style.overflow = isAddCash ? "hidden" : "auto";
     !isAddCash && dispatch(getCash());
   }, [, isAddCash]);
+
+  useEffect(() => {
+    console.log(savedCash);
+  }, [savedCash]);
 
   const addCard = (): void => {
     dispatch(setAddCard(true));

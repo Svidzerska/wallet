@@ -9,6 +9,7 @@ interface InitialState {
   savedCash: Cash | null;
   cashFromServer: Cash[];
   editingPocket: Cash;
+  editedCash: string;
 }
 
 const initialState: InitialState = {
@@ -17,6 +18,7 @@ const initialState: InitialState = {
   savedCash: null,
   cashFromServer: [],
   editingPocket: {},
+  editedCash: "",
 };
 
 export const saveCash = createAsyncThunk<any, Cash>("cash/saveCash", async (cash: Cash) => {
@@ -36,6 +38,7 @@ export const getCash = createAsyncThunk<any>("cash/getCash", async () => {
 
 export const editCash = createAsyncThunk<any, Cash>("card/editCard", async (cashPocket: Cash) => {
   return cashApi.editCash(cashPocket)?.then((data: any) => {
+    console.log(data);
     return data; //payload - data
   }) as Promise<any>;
 });
@@ -56,6 +59,7 @@ export const cashSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(saveCash.fulfilled, (state, action) => {
+      console.log(action.payload);
       state.savedCash = action.payload;
     });
     builder.addCase(saveCash.pending, (state, _action) => {
@@ -73,6 +77,17 @@ export const cashSlice = createSlice({
     });
     builder.addCase(getCash.rejected, (state, _action) => {
       state.cashFromServer = [];
+    });
+
+    builder.addCase(editCash.fulfilled, (state, action) => {
+      console.log(action.payload);
+      state.editedCash = action.payload;
+    });
+    builder.addCase(editCash.pending, (state, _action) => {
+      state.editedCash = "";
+    });
+    builder.addCase(editCash.rejected, (state, _action) => {
+      state.editedCash = "";
     });
   },
 });

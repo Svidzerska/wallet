@@ -32,5 +32,6 @@ export const cashApi = {
     });
     const body = await response.text();
     console.log(body);
+    return body;
   },
 };

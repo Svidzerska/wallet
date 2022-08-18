@@ -15,10 +15,11 @@ const AddCash: React.FC = (): JSX.Element => {
   const currentCash: Cash | null = useAppSelector((state) => state.cash.currentCash);
   const cashFromServer: Cash[] = useAppSelector((state) => state.cash.cashFromServer);
   const editingPocket: Cash | null = useAppSelector((state) => state.cash.editingPocket);
+  const savedCash: Cash | null = useAppSelector((state) => state.cash.savedCash);
 
   useEffect(() => {
-    console.log(currentCash);
-  }, [currentCash]);
+    console.log(savedCash);
+  }, [savedCash]);
 
   const handleSubmit = (e: React.FormEvent<HTMLInputElement>): void => {
     e.preventDefault();
