@@ -17,10 +17,6 @@ const GeneralInfo: React.FC = (): JSX.Element => {
 
   const [uniqCurrencies, setUniqCurrencies] = useState<(string | undefined)[]>([]);
 
-  useEffect(() => {
-    console.log(cashFromServer);
-  }, [cashFromServer]);
-
   const sum = (cards: Card[], currency: string): number => {
     const cardsOneCurrency: number[] = cards.map((card) => {
       if (card.currency === currency && card.amount) {
@@ -53,7 +49,6 @@ const GeneralInfo: React.FC = (): JSX.Element => {
   const handleEditCard = (e: React.MouseEvent<HTMLButtonElement>): void => {
     dispatch(setAddCard(true));
     const editingCard = cardsFromServer.find((card) => card.id === e.currentTarget.id);
-    console.log(editingCard);
     dispatch(setEditingCard(editingCard!));
   };
 

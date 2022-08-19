@@ -24,12 +24,12 @@ const FormAddCard: React.FC<Props> = ({ config, handleSubmit, formName, formActi
 
   useEffect(() => {
     dispatch(setCurrentCard({ ...currentValues, ...addCardInfo }));
-  }, [addCardInfo]);
+  }, [addCardInfo, currentValues]);
 
   useEffect(() => {
     const number = currentValues?.card_number;
     const digit = `${number?.substring(0, 4)}${number?.substring(5, 9)}`;
-    dispatch(getAddCardInfo(digit));
+    number && dispatch(getAddCardInfo(digit));
   }, [currentValues]);
 
   const getAditionInfoForCard = (values: Card): void => {

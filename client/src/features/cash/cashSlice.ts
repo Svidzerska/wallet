@@ -55,7 +55,6 @@ export const cashSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getCash.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.cashFromServer = action.payload;
     });
     builder.addCase(getCash.pending, (state, _action) => {

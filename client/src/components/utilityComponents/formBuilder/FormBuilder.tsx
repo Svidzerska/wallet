@@ -4,7 +4,7 @@ import NumberFormat from "react-number-format";
 
 import "./formBuilder.scss";
 
-import { getAddCardInfo, setCurrentCard } from "../../../features/cards/cardsSlice";
+import { setCurrentCard } from "../../../features/cards/cardsSlice";
 
 import { Config } from "../../../interfaces/Config";
 import { Card } from "../../../interfaces/Card";
@@ -40,7 +40,6 @@ const FormBuilder: React.FC<Props> = ({
   }, [isValid, values]);
 
   useEffect(() => {
-    console.log(values);
     validInputsArray.includes(false) ? setValid(false) : setValid(true);
   }, [values]);
 
