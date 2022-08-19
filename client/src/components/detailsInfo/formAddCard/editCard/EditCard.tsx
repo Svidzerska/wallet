@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 
 import "./editCard.scss";
 
-import { editCard, setAddCard, setEditingCard } from "../../../../features/cards/cardsSlice";
+import { editCard, getCards, setAddCard, setEditingCard } from "../../../../features/cards/cardsSlice";
 
 import { configFormAddCard } from "../configFormAddCard/configFormAddCard";
 import { Card } from "../../../../interfaces/Card";
@@ -26,7 +26,7 @@ const EditCard: React.FC<Props> = ({ editingCard }): JSX.Element => {
       currentCard &&
       !Object.keys({ ...currentCard, ...editingCard }).every((key) => currentCard[key] === editingCard[key])
     ) {
-      dispatch(editCard({ ...currentCard }));
+      dispatch(editCard({ ...currentCard })).then(() => dispatch(getCards()));
     }
     dispatch(setEditingCard(null));
   };

@@ -6,19 +6,15 @@ import { Cash } from "../../interfaces/Cash";
 interface InitialState {
   isAddCash: boolean;
   currentCash: Cash | null;
-  savedCash: Cash | null;
   cashFromServer: Cash[];
   editingPocket: Cash;
-  editedCash: string;
 }
 
 const initialState: InitialState = {
   isAddCash: false,
   currentCash: null,
-  savedCash: null,
   cashFromServer: [],
   editingPocket: {},
-  editedCash: "",
 };
 
 export const saveCash = createAsyncThunk<any, Cash>("cash/saveCash", async (cash: Cash) => {
@@ -58,18 +54,8 @@ export const cashSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(saveCash.fulfilled, (state, action) => {
-      console.log(action.payload);
-      state.savedCash = action.payload;
-    });
-    builder.addCase(saveCash.pending, (state, _action) => {
-      state.savedCash = null;
-    });
-    builder.addCase(saveCash.rejected, (state, _action) => {
-      state.savedCash = null;
-    });
-
     builder.addCase(getCash.fulfilled, (state, action) => {
+      console.log(action.payload);
       state.cashFromServer = action.payload;
     });
     builder.addCase(getCash.pending, (state, _action) => {
@@ -77,17 +63,6 @@ export const cashSlice = createSlice({
     });
     builder.addCase(getCash.rejected, (state, _action) => {
       state.cashFromServer = [];
-    });
-
-    builder.addCase(editCash.fulfilled, (state, action) => {
-      console.log(action.payload);
-      state.editedCash = action.payload;
-    });
-    builder.addCase(editCash.pending, (state, _action) => {
-      state.editedCash = "";
-    });
-    builder.addCase(editCash.rejected, (state, _action) => {
-      state.editedCash = "";
     });
   },
 });

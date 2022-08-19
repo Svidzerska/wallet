@@ -3,7 +3,14 @@ import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 
 import "./addCash.scss";
 
-import { editCash, saveCash, setAddCash, setCurrentCash, setEditingPocket } from "../../../../features/cash/cashSlice";
+import {
+  editCash,
+  getCash,
+  saveCash,
+  setAddCash,
+  setCurrentCash,
+  setEditingPocket,
+} from "../../../../features/cash/cashSlice";
 
 import { configFormAddCash } from "../configFormAddCash/configFormAddCash";
 import FormBuilder from "../../../utilityComponents/formBuilder/FormBuilder";
@@ -15,11 +22,6 @@ const AddCash: React.FC = (): JSX.Element => {
   const currentCash: Cash | null = useAppSelector((state) => state.cash.currentCash);
   const cashFromServer: Cash[] = useAppSelector((state) => state.cash.cashFromServer);
   const editingPocket: Cash | null = useAppSelector((state) => state.cash.editingPocket);
-  const savedCash: Cash | null = useAppSelector((state) => state.cash.savedCash);
-
-  useEffect(() => {
-    console.log(savedCash);
-  }, [savedCash]);
 
   const handleSubmit = (e: React.FormEvent<HTMLInputElement>): void => {
     e.preventDefault();
@@ -27,7 +29,9 @@ const AddCash: React.FC = (): JSX.Element => {
     dispatch(setEditingPocket({}));
     const currency = currentCash?.currency ? currentCash?.currency : "UAH";
     const cashPocket = cashFromServer.find((pocket) => pocket.currency === currency);
-    cashPocket ? dispatch(editCash({ ...currentCash, currency })) : dispatch(saveCash({ ...currentCash, currency }));
+    cashPocket
+      ? dispatch(editCash({ ...currentCash, currency })).then(() => dispatch(getCash()))
+      : dispatch(saveCash({ ...currentCash, currency })).then(() => dispatch(getCash()));
   };
 
   const cancelAddCash = (): void => {

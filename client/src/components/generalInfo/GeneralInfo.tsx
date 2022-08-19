@@ -19,10 +19,6 @@ const GeneralInfo: React.FC = (): JSX.Element => {
   const [usd, setUsd] = useState<number>(0);
   const [eur, setEur] = useState<number>(0);
 
-  // useEffect(() => {
-  //   dispatch(getCash());
-  // }, []);
-
   useEffect(() => {
     console.log(cashFromServer);
   }, [cashFromServer]);

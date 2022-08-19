@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 
 import "./addCard.scss";
 
-import { saveCard, setAddCard } from "../../../../features/cards/cardsSlice";
+import { getCards, saveCard, setAddCard } from "../../../../features/cards/cardsSlice";
 
 import { configFormAddCard } from "../configFormAddCard/configFormAddCard";
 import { Card } from "../../../../interfaces/Card";
@@ -19,8 +19,10 @@ const AddCard: React.FC = (): JSX.Element => {
     e.preventDefault();
     dispatch(setAddCard(false));
     currentCard?.currency
-      ? dispatch(saveCard({ ...currentCard, id: Math.random().toString() }))
-      : dispatch(saveCard({ ...currentCard, id: Math.random().toString(), currency: "UAH" }));
+      ? dispatch(saveCard({ ...currentCard, id: Math.random().toString() })).then(() => dispatch(getCards()))
+      : dispatch(saveCard({ ...currentCard, id: Math.random().toString(), currency: "UAH" })).then(() =>
+          dispatch(getCards())
+        );
   };
 
   return (

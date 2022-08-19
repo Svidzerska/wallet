@@ -27,6 +27,7 @@ const initialState: InitialState = {
 
 export const saveCard = createAsyncThunk<any, Card>("card/saveCard", async (card: Card) => {
   return cardApi.saveCard(card)?.then((data: any) => {
+    console.log(11111);
     return data; //payload - data
   }) as Promise<any>;
 });
@@ -35,6 +36,7 @@ export const getCards = createAsyncThunk<any>("cards/getCards", async () => {
   return cardApi
     .getCards()
     ?.then((res: any) => {
+      console.log(33333);
       return res.express; //payload - data
     })
     .catch((err) => console.log(err)) as Promise<any>;
@@ -58,6 +60,7 @@ export const deleteCard = createAsyncThunk<any, string>("card/deleteCard", async
 
 export const editCard = createAsyncThunk<any, Card>("card/editCard", async (card: Card) => {
   return cardApi.editCard(card)?.then((data: any) => {
+    console.log(22222);
     return data; //payload - data
   }) as Promise<any>;
 });

@@ -58,11 +58,8 @@ app.post("/api/cash", (req, res) => {
 });
 
 app.put("/api/cash/:id", (req, res) => {
-  console.log(111111);
-  console.log(req.params.id);
   let cashPocket = cash.find((cashPocket) => cashPocket.currency === req.params.id);
   let input = req.body.cashPocket;
-
   for (let key in cashPocket) {
     if (cashPocket[key] !== input[key]) {
       cashPocket[key] = input[key];
