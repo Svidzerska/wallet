@@ -30,7 +30,7 @@ const FormAddCard: React.FC<Props> = ({ config, handleSubmit, formName, formActi
     const number = currentValues?.card_number;
     const digit = `${number?.substring(0, 4)}${number?.substring(5, 9)}`;
     number && dispatch(getAddCardInfo(digit));
-  }, [currentValues]);
+  }, [currentValues?.card_number]);
 
   const getAditionInfoForCard = (values: Card): void => {
     setCurrentValues({ ...values });
