@@ -15,52 +15,35 @@ const GeneralInfo: React.FC = (): JSX.Element => {
   const cardsFromServer: Card[] = useAppSelector((state) => state.cards.cardsFromServer);
   const cashFromServer: Cash[] = useAppSelector((state) => state.cash.cashFromServer);
 
-  const [uah, setUah] = useState<number>(0);
-  const [usd, setUsd] = useState<number>(0);
-  const [eur, setEur] = useState<number>(0);
+  const [uniqCurrencies, setUniqCurrencies] = useState<(string | undefined)[]>([]);
 
   useEffect(() => {
     console.log(cashFromServer);
   }, [cashFromServer]);
 
+  const sum = (cards: Card[], currency: string): number => {
+    const cardsOneCurrency: number[] = cards.map((card) => {
+      if (card.currency === currency && card.amount) {
+        return Number(card.amount);
+      } else {
+        return 0;
+      }
+    });
+    const result = cardsOneCurrency.reduce((sum, current) => {
+      return sum + current;
+    }, 0);
+
+    return result;
+  };
+
   useEffect(() => {
     const cards = [...cardsFromServer];
 
-    const cardsUAH: number[] = cards.map((card) => {
-      if (card.currency === "UAH" && card.amount) {
-        return Number(card.amount);
-      } else {
-        return 0;
-      }
+    const currencies: (string | undefined)[] = cards.map((card) => {
+      return card.currency && card.currency;
     });
-    const resultUAH = cardsUAH.reduce((sum, current) => {
-      return sum + current;
-    }, 0);
-    setUah(resultUAH);
-
-    const cardsUSD: number[] = cards.map((card) => {
-      if (card.currency === "USD" && card.amount) {
-        return Number(card.amount);
-      } else {
-        return 0;
-      }
-    });
-    const resultUSD = cardsUSD.reduce((sum, current) => {
-      return sum + current;
-    }, 0);
-    setUsd(resultUSD);
-
-    const cardsEUR: number[] = cards.map((card) => {
-      if (card.currency === "EUR" && card.amount) {
-        return Number(card.amount);
-      } else {
-        return 0;
-      }
-    });
-    const resultEUR = cardsEUR.reduce((sum, current) => {
-      return sum + current;
-    }, 0);
-    setEur(resultEUR);
+    const uniqCurrencies = currencies.filter((currency, id) => currencies.indexOf(currency) === id);
+    setUniqCurrencies(uniqCurrencies);
   }, [cardsFromServer]);
 
   const handleEdit = (): void => {
@@ -72,7 +55,6 @@ const GeneralInfo: React.FC = (): JSX.Element => {
     const editingCard = cardsFromServer.find((card) => card.id === e.currentTarget.id);
     console.log(editingCard);
     dispatch(setEditingCard(editingCard!));
-    // dispatch(deleteCard(e.currentTarget.id));
   };
 
   const cardsList: JSX.Element[] = cardsFromServer.map((card: Card) => {
@@ -99,7 +81,19 @@ const GeneralInfo: React.FC = (): JSX.Element => {
     );
   });
 
-  const cashPocketAmount = cashFromServer.map((pocket) => {
+  const allMoney: JSX.Element[] = uniqCurrencies.map((currency) => {
+    if (currency) {
+      return (
+        <p key={currency}>
+          - {sum(cardsFromServer, currency)} {currency}
+        </p>
+      );
+    } else {
+      return <></>;
+    }
+  });
+
+  const cashPocketAmount: JSX.Element[] = cashFromServer.map((pocket) => {
     return (
       <div key={pocket.currency}>
         <p>
@@ -121,11 +115,7 @@ const GeneralInfo: React.FC = (): JSX.Element => {
   return (
     <section className="generalInfo__section">
       <h3 className="balance">Баланс</h3>
-      <div className="money">
-        <p>- {uah} UAH</p>
-        <p>- {usd} USD</p>
-        <p>- {eur} EUR</p>
-      </div>
+      <div className="money">{allMoney}</div>
       <section className="cash">
         <h3 className="cashName">Готівка</h3>
         {cashPocketAmount}

@@ -20,18 +20,20 @@ const FormAddCard: React.FC<Props> = ({ config, handleSubmit, formName, formActi
   const currentCard: Card | null = useAppSelector((state) => state.cards.currentCard);
   const addCardInfo: { scheme: string; type: string } = useAppSelector((state) => state.cards.addCardInfo);
 
+  const [currentValues, setCurrentValues] = useState<Card>();
+
   useEffect(() => {
-    dispatch(setCurrentCard({ ...currentCard, ...addCardInfo }));
+    dispatch(setCurrentCard({ ...currentValues, ...addCardInfo }));
   }, [addCardInfo]);
 
   useEffect(() => {
-    const number = currentCard?.card_number;
+    const number = currentValues?.card_number;
     const digit = `${number?.substring(0, 4)}${number?.substring(5, 9)}`;
-    number && dispatch(getAddCardInfo(digit));
-  }, [currentCard?.card_number]);
+    dispatch(getAddCardInfo(digit));
+  }, [currentValues]);
 
   const getAditionInfoForCard = (values: Card): void => {
-    dispatch(setCurrentCard({ ...values, ...addCardInfo }));
+    setCurrentValues({ ...values });
   };
 
   return (
