@@ -45,7 +45,6 @@ const FormBuilder: React.FC<Props> = ({
 
   //form consist of
   const handleChange = (e: FormEvent<HTMLInputElement> | FormEvent<HTMLSelectElement>): void => {
-    console.log(e.currentTarget.value);
     const value: string = e.currentTarget.value;
     const id: string = e.currentTarget.id;
     setValues({ ...values, [id]: value });
