@@ -15,9 +15,14 @@ const AddCard: React.FC = (): JSX.Element => {
 
   const currentCard: Card | null = useAppSelector((state) => state.cards.currentCard);
 
+  useEffect(() => {
+    console.log(currentCard);
+  }, [currentCard]);
+
   const handleSubmit = (e: React.FormEvent<HTMLInputElement>): void => {
     e.preventDefault();
     dispatch(setAddCard(false));
+    console.log(currentCard);
     currentCard?.currency
       ? dispatch(saveCard({ ...currentCard, id: Math.random().toString() })).then(() => dispatch(getCards()))
       : dispatch(saveCard({ ...currentCard, id: Math.random().toString(), currency: "UAH" })).then(() =>

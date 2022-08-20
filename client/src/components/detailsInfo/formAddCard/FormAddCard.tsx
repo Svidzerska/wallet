@@ -23,6 +23,8 @@ const FormAddCard: React.FC<Props> = ({ config, handleSubmit, formName, formActi
   const [currentValues, setCurrentValues] = useState<Card>();
 
   useEffect(() => {
+    console.log(addCardInfo);
+    console.log(currentValues);
     dispatch(setCurrentCard({ ...currentValues, ...addCardInfo }));
   }, [addCardInfo, currentValues]);
 

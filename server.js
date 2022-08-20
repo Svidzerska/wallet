@@ -35,6 +35,15 @@ app.put("/api/cards/:id", (req, res) => {
       card[key] = input[key];
     }
   }
+
+  const keyInput = Object.keys(input); //[]
+  const keyCard = Object.keys(card); //[]
+  const newKey = keyInput.filter((keyInput) => !keyCard.find((keyCard) => keyInput === keyCard));
+
+  newKey.forEach((key) => {
+    card[key] = input[key];
+  });
+
   res.send(`${req.params.id}`);
 });
 

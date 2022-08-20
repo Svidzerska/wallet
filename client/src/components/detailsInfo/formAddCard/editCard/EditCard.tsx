@@ -19,6 +19,10 @@ const EditCard: React.FC<Props> = ({ editingCard }): JSX.Element => {
 
   const currentCard: Card | null = useAppSelector((state) => state.cards.currentCard);
 
+  useEffect(() => {
+    console.log(currentCard);
+  }, [currentCard]);
+
   const handleSaveEdit = (e: React.FormEvent<HTMLInputElement>): void => {
     e.preventDefault();
     dispatch(setAddCard(false));

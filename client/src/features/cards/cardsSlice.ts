@@ -99,6 +99,7 @@ export const cardsSlice = createSlice({
     builder.addCase(getAddCardInfo.fulfilled, (state, action) => {
       state.addCardInfo = action.payload;
     });
+    //when pending
     builder.addCase(getAddCardInfo.pending, (state, _action) => {
       state.addCardInfo = { scheme: "", type: "" };
     });

@@ -23,6 +23,10 @@ const DetailsInfo: React.FC = (): JSX.Element => {
   const isAddCash: boolean = useAppSelector((state) => state.cash.isAddCash);
 
   useEffect(() => {
+    console.log(cardsFromServer);
+  }, [cardsFromServer]);
+
+  useEffect(() => {
     document.body.style.overflow = isAddCash ? "hidden" : "auto";
   }, [isAddCash]);
 
