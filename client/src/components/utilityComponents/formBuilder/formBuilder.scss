@@ -37,3 +37,13 @@ form {
     }
   }
 }
+
+@media screen and (max-width: 600px) {
+  form {
+    fieldset {
+      input {
+        width: 250px;
+      }
+    }
+  }
+}
