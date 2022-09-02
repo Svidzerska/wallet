@@ -17,7 +17,9 @@ const GeneralInfo: React.FC = (): JSX.Element => {
 
   const [uniqCurrencies, setUniqCurrencies] = useState<(string | undefined)[]>([]);
 
-  const sum = (cards: Card[], currency: string): number => {
+  const orderCurrencies = ["UAH", "USD", "EUR"];
+
+  const sum = (cards: Card[], cash: Cash[], currency: string): number => {
     const cardsOneCurrency: number[] = cards.map((card) => {
       if (card.currency === currency && card.amount) {
         return Number(card.amount);
@@ -25,22 +27,22 @@ const GeneralInfo: React.FC = (): JSX.Element => {
         return 0;
       }
     });
-    const result = cardsOneCurrency.reduce((sum, current) => {
+
+    const cardsSum: number = cardsOneCurrency.reduce((sum, current) => {
       return sum + current;
     }, 0);
 
-    return result;
+    const cashOneCurrency: number = Number(cash.find((pocket) => pocket.currency === currency)?.amount);
+
+    return !isNaN(cashOneCurrency) ? cardsSum + cashOneCurrency : cardsSum;
   };
 
   useEffect(() => {
-    const cards = [...cardsFromServer];
-
-    const currencies: (string | undefined)[] = cards.map((card) => {
-      return card.currency && card.currency;
-    });
+    const currencies: string[] = [...cardsFromServer, ...cashFromServer].map((pocket) => pocket.currency!);
     const uniqCurrencies = currencies.filter((currency, id) => currencies.indexOf(currency) === id);
-    setUniqCurrencies(uniqCurrencies);
-  }, [cardsFromServer]);
+    const uniqOrderCurrencies = orderCurrencies.filter((defaultCurrency) => uniqCurrencies.includes(defaultCurrency));
+    setUniqCurrencies(uniqOrderCurrencies);
+  }, [cardsFromServer, cashFromServer]);
 
   const handleEdit = (): void => {
     dispatch(setAddCash(true));
@@ -80,7 +82,7 @@ const GeneralInfo: React.FC = (): JSX.Element => {
     if (currency) {
       return (
         <p key={currency}>
-          - {sum(cardsFromServer, currency)} {currency}
+          - {sum(cardsFromServer, cashFromServer, currency)} {currency}
         </p>
       );
     } else {
@@ -88,11 +90,11 @@ const GeneralInfo: React.FC = (): JSX.Element => {
     }
   });
 
-  const cashPocketAmount: JSX.Element[] = cashFromServer.map((pocket) => {
+  const cashPocketAmount: JSX.Element[] = cashFromServer.map((pocket, index) => {
     return (
       <div key={pocket.currency}>
         <p>
-          - {pocket.amount} {pocket.currency}
+          <b>{index + 1}.</b> {pocket.amount} {pocket.currency}
         </p>
         <button
           className="editButton"

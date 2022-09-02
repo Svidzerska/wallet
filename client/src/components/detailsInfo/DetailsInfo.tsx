@@ -50,7 +50,7 @@ const DetailsInfo: React.FC = (): JSX.Element => {
 
   const cardsList: JSX.Element[] = cardsFromServer.map((card: Card, index: number) => {
     return (
-      <li key={`${card.card_number}${index}`} className="cardElement">
+      <li key={`${card.id}`} className="cardElement">
         <CardComponent
           number={card.card_number}
           expire_date={card.exp_date}
