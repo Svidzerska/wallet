@@ -50,6 +50,7 @@ const AddCash: React.FC = (): JSX.Element => {
           formName="Додати готівку"
           formActionName="Зберегти"
           onSubmitToDo={handleSubmit}
+          options={editingPocket.currency ? [editingPocket.currency] : ["UAH", "USD", "EUR"]}
           processInputValues={getCashFromValues}
           autoFill={editingPocket}
         />

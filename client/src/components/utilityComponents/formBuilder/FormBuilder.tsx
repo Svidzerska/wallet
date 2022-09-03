@@ -18,6 +18,7 @@ interface Props {
   formName: string;
   formActionName: string;
   onSubmitToDo: Function;
+  options: string[];
   autoFill?: Card | Cash;
   processInputValues?: Function;
 }
@@ -27,6 +28,7 @@ const FormBuilder: React.FC<Props> = ({
   formName,
   formActionName,
   onSubmitToDo,
+  options,
   autoFill,
   processInputValues,
 }): JSX.Element => {
@@ -82,7 +84,7 @@ const FormBuilder: React.FC<Props> = ({
               id={name}
               name={name}
               required={true}
-              options={["UAH", "USD", "EUR"]}
+              options={options}
               onChange={handleChange}
               currentState={autoFill?.currency}
             />

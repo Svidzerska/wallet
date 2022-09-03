@@ -42,6 +42,7 @@ const FormAddCard: React.FC<Props> = ({ config, handleSubmit, formName, formActi
       formName={formName}
       formActionName={formActionName}
       onSubmitToDo={handleSubmit}
+      options={["UAH", "USD", "EUR"]}
       processInputValues={getAditionInfoForCard}
       autoFill={autoFill}
     />
