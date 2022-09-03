@@ -25,11 +25,14 @@ const AddCash: React.FC = (): JSX.Element => {
 
   const handleSubmit = (e: React.FormEvent<HTMLInputElement>): void => {
     e.preventDefault();
+    const editAmount = editingPocket.amount;
+
     dispatch(setAddCash(false));
     dispatch(setEditingPocket({}));
+
     const currency = currentCash?.currency ? currentCash?.currency : "UAH";
     const cashPocket = cashFromServer.find((pocket) => pocket.currency === currency);
-    cashPocket
+    cashPocket && editAmount
       ? dispatch(editCash({ ...currentCash, currency })).then(() => dispatch(getCash()))
       : dispatch(saveCash({ ...currentCash, currency })).then(() => dispatch(getCash()));
   };

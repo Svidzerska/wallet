@@ -4,7 +4,7 @@ import NumberFormat from "react-number-format";
 
 import "./formBuilder.scss";
 
-import { setCurrentCard } from "../../../features/cards/cardsSlice";
+// import { setCurrentCard } from "../../../features/cards/cardsSlice";
 
 import { Config } from "../../../interfaces/Config";
 import { Card } from "../../../interfaces/Card";

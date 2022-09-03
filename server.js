@@ -60,20 +60,21 @@ app.get("/api/cash", (req, res) => {
 });
 
 app.post("/api/cash", (req, res) => {
-  let input = req.body;
-  console.log(input.cash);
-  cash.push(input.cash);
-  res.send(`I received your POST request. This is what you sent me: ${input.cash}`);
+  let input = req.body.cash;
+  // console.log(input.cash); // {amount: 100, currency: "UAH"};
+
+  let cashPocket = cash.find((cashPocket) => cashPocket.currency === input.currency);
+  cashPocket ? (cashPocket.amount = `${+cashPocket.amount + +input.amount}`) : cash.push(input);
+  res.send(`I received your POST request. This is what you sent me: ${input}`);
 });
 
 app.put("/api/cash/:id", (req, res) => {
   let cashPocket = cash.find((cashPocket) => cashPocket.currency === req.params.id);
   let input = req.body.cashPocket;
-  for (let key in cashPocket) {
-    if (cashPocket[key] !== input[key]) {
-      cashPocket[key] = input[key];
-    }
-  }
+
+  cashPocket.amount = input.amount;
+  console.log(cash);
+
   res.send(`${req.params.id}`);
 });
 
