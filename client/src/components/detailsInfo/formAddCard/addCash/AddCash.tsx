@@ -14,6 +14,7 @@ import {
 
 import { configFormAddCash } from "../configFormAddCash/configFormAddCash";
 import FormBuilder from "../../../utilityComponents/formBuilder/FormBuilder";
+import FormFormik from "../../../utilityComponents/formFormik/FormFormik";
 import { Cash } from "../../../../interfaces/Cash";
 
 const AddCash: React.FC = (): JSX.Element => {
@@ -48,7 +49,7 @@ const AddCash: React.FC = (): JSX.Element => {
   return (
     <section className="cashPopup_section">
       <div className="cashPopup">
-        <FormBuilder
+        <FormFormik
           config={configFormAddCash}
           formName="Додати готівку"
           formActionName="Зберегти"
