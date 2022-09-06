@@ -1,49 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { FormikValues } from "formik";
+
+import { Cash } from "../../../../interfaces/Cash";
 
 import "./addCash.scss";
 
-import {
-  editCash,
-  getCash,
-  saveCash,
-  setAddCash,
-  setCurrentCash,
-  setEditingPocket,
-} from "../../../../features/cash/cashSlice";
+import { editCash, getCash, saveCash, setAddCash, setEditingPocket } from "../../../../features/cash/cashSlice";
 
 import { configFormAddCash } from "../configFormAddCash/configFormAddCash";
-import FormBuilder from "../../../utilityComponents/formBuilder/FormBuilder";
+
 import FormFormik from "../../../utilityComponents/formFormik/FormFormik";
-import { Cash } from "../../../../interfaces/Cash";
 
 const AddCash: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
-  const currentCash: Cash | null = useAppSelector((state) => state.cash.currentCash);
+  // const currentCash: Cash | null = useAppSelector((state) => state.cash.currentCash);
   const cashFromServer: Cash[] = useAppSelector((state) => state.cash.cashFromServer);
   const editingPocket: Cash | null = useAppSelector((state) => state.cash.editingPocket);
 
-  const handleSubmit = (e: React.FormEvent<HTMLInputElement>): void => {
-    e.preventDefault();
+  const handleSubmit = (values: FormikValues): void => {
     const editAmount = editingPocket.amount;
 
     dispatch(setAddCash(false));
     dispatch(setEditingPocket({}));
 
-    const currency = currentCash?.currency ? currentCash?.currency : "UAH";
+    const currency = values?.currency ? values?.currency : "UAH";
     const cashPocket = cashFromServer.find((pocket) => pocket.currency === currency);
     cashPocket && editAmount
-      ? dispatch(editCash({ ...currentCash, currency })).then(() => dispatch(getCash()))
-      : dispatch(saveCash({ ...currentCash, currency })).then(() => dispatch(getCash()));
+      ? dispatch(editCash({ ...values, currency })).then(() => dispatch(getCash()))
+      : dispatch(saveCash({ ...values, currency })).then(() => dispatch(getCash()));
   };
 
   const cancelAddCash = (): void => {
     dispatch(setAddCash(false));
-  };
-
-  const getCashFromValues = (values: Cash): void => {
-    dispatch(setCurrentCash({ ...values }));
+    dispatch(setEditingPocket({}));
   };
 
   return (
@@ -51,11 +42,10 @@ const AddCash: React.FC = (): JSX.Element => {
       <div className="cashPopup">
         <FormFormik
           config={configFormAddCash}
-          formName="Додати готівку"
+          formName={editingPocket.amount ? "Редагувати готівку" : "Додати готівку"}
           formActionName="Зберегти"
           onSubmitToDo={handleSubmit}
           options={editingPocket.currency ? [editingPocket.currency] : ["UAH", "USD", "EUR"]}
-          processInputValues={getCashFromValues}
           autoFill={editingPocket}
         />
         <button onClick={cancelAddCash} className="cancelAddCashButton">

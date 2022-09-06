@@ -1,9 +1,11 @@
+import validatingFunctions from "../../../../utilities/validatingFunctions";
+
 export const configFormAddCash = [
   {
     fieldName: "amount",
     type: "text",
     placeholder: "Amount",
-    validationMethods: [],
+    validationMethods: [validatingFunctions.checkCvv],
     required: true,
   },
   {

@@ -11,11 +11,9 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "formik": "^2.2.9",
     "luhn-js": "^1.1.2",
     "react-number-format": "^4.9.3",
-    "sass": "^1.54.4",
-    "yup": "^0.32.11"
+    "sass": "^1.54.4"
   },
   "devDependencies": {
     "concurrently": "^4.0.1"

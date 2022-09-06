@@ -1,10 +1,9 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useFormik } from "formik";
+import * as Yup from "yup";
 
 import NumberFormat from "react-number-format";
-
-// import { setCurrentCard } from "../../../features/cards/cardsSlice";
 
 import { Config } from "../../../interfaces/Config";
 import { Card } from "../../../interfaces/Card";
@@ -19,7 +18,6 @@ interface Props {
   onSubmitToDo: Function;
   options: string[];
   autoFill?: Card | Cash;
-  processInputValues?: Function;
 }
 
 const FormFormik: React.FC<Props> = ({
@@ -32,21 +30,44 @@ const FormFormik: React.FC<Props> = ({
 }): JSX.Element => {
   //form consist of
 
-  const formik = useFormik({
-    initialValues: config.reduce((obj: { [fieldName: string]: string }, element: Config, index: number) => {
-      obj[element.fieldName] = "";
+  const objConfig = config.reduce((obj: { [fieldName: string]: string | number }, element: Config, index: number) => {
+    console.log(element.fieldName);
+    obj[element.fieldName] = "";
+    return obj;
+  }, {});
+
+  const objConfigValidation = config.reduce(
+    (obj: { [fieldName: string]: Yup.StringSchema }, element: Config, index: number) => {
+      console.log(element.fieldName);
+      const methodMy = element.validationMethods[0];
+      console.log(typeof methodMy);
+      obj[element.fieldName] = Yup.string().test("is CVV", "is not CVV", (value) => {
+        console.log(methodMy(value).valid);
+        return methodMy(value).valid;
+      });
       return obj;
-    }, {}),
-    onSubmit: (values) => {
-      console.log(values);
+    },
+    {}
+  );
+
+  const formik = useFormik({
+    initialValues: autoFill ? autoFill : objConfig,
+    validationSchema: Yup.object(objConfigValidation),
+    onSubmit: (values): void => {
+      onSubmitToDo(values);
     },
   });
 
   const listOfFields: JSX.Element[] = config.map((field: Config) => {
     const name = field.fieldName;
 
+    console.log(formik.values[name]);
+
     return (
       <fieldset key={name}>
+        <label htmlFor={name}>
+          {formik.touched[name] && formik.errors[name] ? <div>{formik.errors[name]}</div> : null}
+        </label>
         {field.type === "select" ? (
           <>
             <Select
@@ -65,7 +86,7 @@ const FormFormik: React.FC<Props> = ({
             key={name}
             id={name}
             placeholder={field.placeholder}
-            value={formik.values.name}
+            value={formik.values[name]}
             onChange={formik.handleChange}
             required={field.required}
           />
@@ -76,7 +97,7 @@ const FormFormik: React.FC<Props> = ({
               id={name}
               placeholder={field.placeholder}
               format={field.format}
-              value={formik.values.name}
+              value={formik.values[name]}
               mask={field.mask}
               onChange={formik.handleChange}
               required={field.required}

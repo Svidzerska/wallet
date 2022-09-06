@@ -5,14 +5,12 @@ import { Cash } from "../../interfaces/Cash";
 
 interface InitialState {
   isAddCash: boolean;
-  currentCash: Cash | null;
   cashFromServer: Cash[];
   editingPocket: Cash;
 }
 
 const initialState: InitialState = {
   isAddCash: false,
-  currentCash: null,
   cashFromServer: [],
   editingPocket: {},
 };
@@ -46,9 +44,6 @@ export const cashSlice = createSlice({
     setAddCash: (state: InitialState, action: PayloadAction<boolean>) => {
       state.isAddCash = action.payload;
     },
-    setCurrentCash: (state: InitialState, action: PayloadAction<Cash | null>) => {
-      state.currentCash = action.payload;
-    },
     setEditingPocket: (state: InitialState, action: PayloadAction<Cash>) => {
       state.editingPocket = action.payload;
     },
@@ -66,6 +61,6 @@ export const cashSlice = createSlice({
   },
 });
 
-export const { setAddCash, setCurrentCash, setEditingPocket } = cashSlice.actions;
+export const { setAddCash, setEditingPocket } = cashSlice.actions;
 
 export default cashSlice.reducer;
