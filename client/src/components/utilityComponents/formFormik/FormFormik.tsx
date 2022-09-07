@@ -13,6 +13,7 @@ import Select from "../select/Select";
 
 interface Props {
   config: Config[];
+  validationSchema: any;
   formName: string;
   formActionName: string;
   onSubmitToDo: Function;
@@ -22,6 +23,7 @@ interface Props {
 
 const FormFormik: React.FC<Props> = ({
   config,
+  validationSchema,
   formName,
   formActionName,
   onSubmitToDo,
@@ -36,23 +38,9 @@ const FormFormik: React.FC<Props> = ({
     return obj;
   }, {});
 
-  const objConfigValidation = config.reduce(
-    (obj: { [fieldName: string]: Yup.StringSchema }, element: Config, index: number) => {
-      console.log(element.fieldName);
-      const methodMy = element.validationMethods[0];
-      console.log(typeof methodMy);
-      obj[element.fieldName] = Yup.string().test("is CVV", "is not CVV", (value) => {
-        console.log(methodMy(value).valid);
-        return methodMy(value).valid;
-      });
-      return obj;
-    },
-    {}
-  );
-
   const formik = useFormik({
     initialValues: autoFill ? autoFill : objConfig,
-    validationSchema: Yup.object(objConfigValidation),
+    validationSchema: Yup.object(validationSchema),
     onSubmit: (values): void => {
       onSubmitToDo(values);
     },
@@ -62,12 +50,11 @@ const FormFormik: React.FC<Props> = ({
     const name = field.fieldName;
 
     console.log(formik.values[name]);
+    console.log(formik.errors[name], formik.touched[name]);
 
     return (
       <fieldset key={name}>
-        <label htmlFor={name}>
-          {formik.touched[name] && formik.errors[name] ? <div>{formik.errors[name]}</div> : null}
-        </label>
+        <label htmlFor={name}>{formik.errors[name] ? <div>{formik.errors[name]}</div> : null}</label>
         {field.type === "select" ? (
           <>
             <Select

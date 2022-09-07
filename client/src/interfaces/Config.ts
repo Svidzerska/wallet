@@ -3,7 +3,7 @@ export interface Config {
   type: string;
   placeholder: string;
   validationMethods: Function[];
-  required: boolean;
+  required?: boolean;
   format?: string | any;
   mask?: string;
 }

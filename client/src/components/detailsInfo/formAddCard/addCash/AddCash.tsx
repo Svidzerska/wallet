@@ -9,6 +9,7 @@ import "./addCash.scss";
 import { editCash, getCash, saveCash, setAddCash, setEditingPocket } from "../../../../features/cash/cashSlice";
 
 import { configFormAddCash } from "../configFormAddCash/configFormAddCash";
+import { validateCash } from "../configFormAddCash/validateCash";
 
 import FormFormik from "../../../utilityComponents/formFormik/FormFormik";
 
@@ -42,6 +43,7 @@ const AddCash: React.FC = (): JSX.Element => {
       <div className="cashPopup">
         <FormFormik
           config={configFormAddCash}
+          validationSchema={validateCash}
           formName={editingPocket.amount ? "Редагувати готівку" : "Додати готівку"}
           formActionName="Зберегти"
           onSubmitToDo={handleSubmit}

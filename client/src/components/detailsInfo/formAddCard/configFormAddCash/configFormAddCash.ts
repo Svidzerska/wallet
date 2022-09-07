@@ -5,8 +5,8 @@ export const configFormAddCash = [
     fieldName: "amount",
     type: "text",
     placeholder: "Amount",
-    validationMethods: [validatingFunctions.checkCvv],
-    required: true,
+    validationMethods: [],
+    // required: true,
   },
   {
     fieldName: "currency",
