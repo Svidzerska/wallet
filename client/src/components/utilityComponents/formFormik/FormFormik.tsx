@@ -38,9 +38,15 @@ const FormFormik: React.FC<Props> = ({
     return obj;
   }, {});
 
+  const objValid = config.reduce((obj: { [fieldName: string]: Yup.StringSchema }, element: Config, index: number) => {
+    obj[element.fieldName] = element.validationMethods;
+    console.log(obj);
+    return obj;
+  }, {});
+
   const formik = useFormik({
     initialValues: autoFill ? autoFill : objConfig,
-    validationSchema: Yup.object(validationSchema),
+    validationSchema: Yup.object(objValid),
     onSubmit: (values): void => {
       onSubmitToDo(values);
     },
@@ -54,7 +60,12 @@ const FormFormik: React.FC<Props> = ({
 
     return (
       <fieldset key={name}>
-        <label htmlFor={name}>{formik.errors[name] ? <div>{formik.errors[name]}</div> : null}</label>
+        {formik.errors[name] ? (
+          <label htmlFor={name}>
+            <i>{formik.errors[name]}</i>
+            <br />
+          </label>
+        ) : null}
         {field.type === "select" ? (
           <>
             <Select

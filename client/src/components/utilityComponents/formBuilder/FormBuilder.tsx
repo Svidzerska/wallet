@@ -57,7 +57,7 @@ const FormBuilder: React.FC<Props> = ({
   const listOfFields: JSX.Element[] = config.map((field: Config) => {
     const name = field.fieldName;
 
-    const validationResult: ValidationResult[] = field.validationMethods.map((rule) => {
+    const validationResult: ValidationResult[] = field.validationMethods.map((rule: any) => {
       return values[name] ? rule(values[name]) : { valid: false };
     });
 
