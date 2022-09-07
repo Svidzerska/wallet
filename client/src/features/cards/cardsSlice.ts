@@ -9,7 +9,7 @@ interface InitialState {
   currentCard: Card | null;
   savedCard: Card | null;
   cardsFromServer: Card[];
-  addCardInfo: { scheme: string; type: string };
+  addCardInfo: { scheme: string; type: string } | null;
   deletedCard: string;
   editedCard: string;
 }
@@ -20,7 +20,7 @@ const initialState: InitialState = {
   currentCard: null,
   savedCard: null,
   cardsFromServer: [],
-  addCardInfo: { scheme: "", type: "" },
+  addCardInfo: null,
   deletedCard: "",
   editedCard: "",
 };
@@ -101,10 +101,10 @@ export const cardsSlice = createSlice({
     });
     //when pending
     builder.addCase(getAddCardInfo.pending, (state, _action) => {
-      state.addCardInfo = { scheme: "", type: "" };
+      state.addCardInfo = null;
     });
     builder.addCase(getAddCardInfo.rejected, (state, _action) => {
-      state.addCardInfo = { scheme: "", type: "" };
+      state.addCardInfo = null;
     });
 
     builder.addCase(deleteCard.fulfilled, (state, action) => {

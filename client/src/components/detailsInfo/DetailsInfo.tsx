@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
 import "./detailsInfo.scss";
 
-import { deleteCard, getCards, setAddCard, setEditingCard } from "../../features/cards/cardsSlice";
+import { deleteCard, getCards, setAddCard, setCurrentCard, setEditingCard } from "../../features/cards/cardsSlice";
 import { setAddCash } from "../../features/cash/cashSlice";
 
 import { Card } from "../../interfaces/Card";
@@ -32,6 +32,7 @@ const DetailsInfo: React.FC = (): JSX.Element => {
 
   const addCard = (): void => {
     dispatch(setAddCard(true));
+    dispatch(setCurrentCard(null));
   };
 
   const cancelAddCard = (): void => {

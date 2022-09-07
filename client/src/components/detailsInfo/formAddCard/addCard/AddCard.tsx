@@ -16,23 +16,19 @@ const AddCard: React.FC = (): JSX.Element => {
 
   const currentCard: Card | null = useAppSelector((state) => state.cards.currentCard);
 
-  const handleSubmit = (values: FormikValues): void => {
-    dispatch(setAddCard(false));
-    currentCard?.currency
-      ? dispatch(saveCard({ ...values, id: Math.random().toString() })).then(() => dispatch(getCards()))
-      : dispatch(saveCard({ ...values, id: Math.random().toString(), currency: "UAH" })).then(() =>
-          dispatch(getCards())
-        );
-  };
+  useEffect(() => {
+    console.log(currentCard);
+    if (currentCard?.card_number) {
+      dispatch(setAddCard(false));
+      currentCard?.currency
+        ? dispatch(saveCard({ ...currentCard, id: Math.random().toString() })).then(() => dispatch(getCards()))
+        : dispatch(saveCard({ ...currentCard, id: Math.random().toString(), currency: "UAH" })).then(() =>
+            dispatch(getCards())
+          );
+    }
+  }, [currentCard]);
 
-  return (
-    <FormAddCard
-      config={configFormAddCard}
-      formName="Додавання картки"
-      formActionName="Додати картку"
-      handleSubmit={handleSubmit}
-    />
-  );
+  return <FormAddCard config={configFormAddCard} formName="Додавання картки" formActionName="Додати картку" />;
 };
 
 export default AddCard;
