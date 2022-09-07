@@ -13,7 +13,6 @@ import Select from "../select/Select";
 
 interface Props {
   config: Config[];
-  validationSchema: any;
   formName: string;
   formActionName: string;
   onSubmitToDo: Function;
@@ -23,7 +22,6 @@ interface Props {
 
 const FormFormik: React.FC<Props> = ({
   config,
-  validationSchema,
   formName,
   formActionName,
   onSubmitToDo,

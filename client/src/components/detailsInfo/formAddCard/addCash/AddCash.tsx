@@ -43,7 +43,6 @@ const AddCash: React.FC = (): JSX.Element => {
       <div className="cashPopup">
         <FormFormik
           config={configFormAddCash}
-          validationSchema={validateCash}
           formName={editingPocket.amount ? "Редагувати готівку" : "Додати готівку"}
           formActionName="Зберегти"
           onSubmitToDo={handleSubmit}

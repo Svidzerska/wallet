@@ -5,6 +5,7 @@ import { getAddCardInfo, setCurrentCard } from "../../../features/cards/cardsSli
 
 import FormBuilder from "../../utilityComponents/formBuilder/FormBuilder";
 import { Card } from "../../../interfaces/Card";
+import FormFormik from "../../utilityComponents/formFormik/FormFormik";
 
 interface Props {
   config: any;
@@ -37,13 +38,13 @@ const FormAddCard: React.FC<Props> = ({ config, handleSubmit, formName, formActi
   };
 
   return (
-    <FormBuilder
+    <FormFormik
       config={config}
       formName={formName}
       formActionName={formActionName}
       onSubmitToDo={handleSubmit}
       options={["UAH", "USD", "EUR"]}
-      processInputValues={getAditionInfoForCard}
+      // processInputValues={getAditionInfoForCard}
       autoFill={autoFill}
     />
   );

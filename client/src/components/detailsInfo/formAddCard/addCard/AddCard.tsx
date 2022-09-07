@@ -9,18 +9,18 @@ import { configFormAddCard } from "../configFormAddCard/configFormAddCard";
 import { Card } from "../../../../interfaces/Card";
 
 import FormAddCard from "../FormAddCard";
+import { FormikValues } from "formik";
 
 const AddCard: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const currentCard: Card | null = useAppSelector((state) => state.cards.currentCard);
 
-  const handleSubmit = (e: React.FormEvent<HTMLInputElement>): void => {
-    e.preventDefault();
+  const handleSubmit = (values: FormikValues): void => {
     dispatch(setAddCard(false));
     currentCard?.currency
-      ? dispatch(saveCard({ ...currentCard, id: Math.random().toString() })).then(() => dispatch(getCards()))
-      : dispatch(saveCard({ ...currentCard, id: Math.random().toString(), currency: "UAH" })).then(() =>
+      ? dispatch(saveCard({ ...values, id: Math.random().toString() })).then(() => dispatch(getCards()))
+      : dispatch(saveCard({ ...values, id: Math.random().toString(), currency: "UAH" })).then(() =>
           dispatch(getCards())
         );
   };
