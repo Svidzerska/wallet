@@ -5,6 +5,8 @@ import * as Yup from "yup";
 
 import NumberFormat from "react-number-format";
 
+import "./formFormik.scss";
+
 import { Config } from "../../../interfaces/Config";
 import { Card } from "../../../interfaces/Card";
 import { Cash } from "../../../interfaces/Cash";
