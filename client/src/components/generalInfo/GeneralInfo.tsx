@@ -79,7 +79,7 @@ const GeneralInfo: React.FC = (): JSX.Element => {
     );
   });
 
-  const allMoney: JSX.Element[] = uniqCurrencies.map((currency) => {
+  const allMoney: (JSX.Element | null)[] = uniqCurrencies.map((currency) => {
     if (currency) {
       return (
         <p key={currency}>
@@ -87,7 +87,7 @@ const GeneralInfo: React.FC = (): JSX.Element => {
         </p>
       );
     } else {
-      return <></>;
+      return null;
     }
   });
 
@@ -113,13 +113,15 @@ const GeneralInfo: React.FC = (): JSX.Element => {
   return (
     <section className="generalInfo__section">
       <h3 className="balance">Баланс</h3>
-      <div className="money">{allMoney}</div>
+      <div className="money">
+        {allMoney.length !== 0 ? allMoney : <p>Не додано жодної картки чи інформації про готівку</p>}
+      </div>
       <section className="cash">
         <h3 className="cashName">Готівка</h3>
-        {cashPocketAmount}
+        {cashPocketAmount.length !== 0 ? cashPocketAmount : <p>Не додано інформації про готівку</p>}
       </section>
       <h3 className="cards">Мої Картки</h3>
-      <ul>{cardsList}</ul>
+      <ul>{cardsList.length !== 0 ? cardsList : <p>Не додано жодної картки</p>}</ul>
     </section>
   );
 };

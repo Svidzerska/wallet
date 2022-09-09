@@ -1,5 +1,4 @@
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -10,7 +9,6 @@ import "./formFormik.scss";
 import { Config } from "../../../interfaces/Config";
 import { Card } from "../../../interfaces/Card";
 import { Cash } from "../../../interfaces/Cash";
-import { ValidationResult } from "../../../interfaces/ValidationResult";
 import Select from "../select/Select";
 
 interface Props {
@@ -33,14 +31,12 @@ const FormFormik: React.FC<Props> = ({
   //form consist of
 
   const objConfig = config.reduce((obj: { [fieldName: string]: string | number }, element: Config, index: number) => {
-    console.log(element.fieldName);
     obj[element.fieldName] = "";
     return obj;
   }, {});
 
   const objValid = config.reduce((obj: { [fieldName: string]: Yup.StringSchema }, element: Config, index: number) => {
     obj[element.fieldName] = element.validationMethods;
-    console.log(obj);
     return obj;
   }, {});
 
@@ -55,12 +51,9 @@ const FormFormik: React.FC<Props> = ({
   const listOfFields: JSX.Element[] = config.map((field: Config) => {
     const name = field.fieldName;
 
-    console.log(formik.values[name]);
-    console.log(formik.errors[name], formik.touched[name]);
-
     return (
       <fieldset key={name}>
-        {formik.errors[name] ? (
+        {formik.touched[name] && formik.errors[name] ? (
           <label htmlFor={name}>
             <i>{formik.errors[name]}</i>
             <br />
@@ -75,6 +68,7 @@ const FormFormik: React.FC<Props> = ({
               required={true}
               options={options}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               currentState={autoFill?.currency}
             />
             <p>*</p>
@@ -83,9 +77,11 @@ const FormFormik: React.FC<Props> = ({
           <input
             key={name}
             id={name}
+            name={name}
             placeholder={field.placeholder}
             value={formik.values[name]}
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             required={field.required}
           />
         ) : (
@@ -93,11 +89,13 @@ const FormFormik: React.FC<Props> = ({
             <NumberFormat
               key={name}
               id={name}
+              name={name}
               placeholder={field.placeholder}
               format={field.format}
               value={formik.values[name]}
               mask={field.mask}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               required={field.required}
             />
             <p>*</p>

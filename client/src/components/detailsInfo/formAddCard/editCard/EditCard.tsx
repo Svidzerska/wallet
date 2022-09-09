@@ -20,7 +20,6 @@ const EditCard: React.FC<Props> = ({ editingCard }): JSX.Element => {
   const currentCard: Card | null = useAppSelector((state) => state.cards.currentCard);
 
   useEffect(() => {
-    console.log(currentCard);
     if (currentCard?.card_number) {
       dispatch(setAddCard(false));
       if (

@@ -9,14 +9,12 @@ import "./addCash.scss";
 import { editCash, getCash, saveCash, setAddCash, setEditingPocket } from "../../../../features/cash/cashSlice";
 
 import { configFormAddCash } from "../configFormAddCash/configFormAddCash";
-import { validateCash } from "../configFormAddCash/validateCash";
 
 import FormFormik from "../../../utilityComponents/formFormik/FormFormik";
 
 const AddCash: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
-  // const currentCash: Cash | null = useAppSelector((state) => state.cash.currentCash);
   const cashFromServer: Cash[] = useAppSelector((state) => state.cash.cashFromServer);
   const editingPocket: Cash | null = useAppSelector((state) => state.cash.editingPocket);
 

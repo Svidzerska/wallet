@@ -32,15 +32,14 @@ export const configFormAddCard = [
     fieldName: "card_number",
     type: "text",
     placeholder: "Card number",
-    // validationMethods: [validatingFunctions.checkNumber],
     validationMethods: Yup.string()
-      .required("Required")
       .test("length", "16 symbols are required", (value) =>
         value ? value.match(/\d/g)?.join("").length === 16 : false
       )
       .test("Luhn-algorithm", "not card number", (value) =>
-        value ? Luhn.isValid(value.match(/\d/g)?.join("")) : false
-      ),
+        value && value.match(/\d/g)?.join("").length === 16 ? Luhn.isValid(value.match(/\d/g)?.join("")) : false
+      )
+      .required("Required"),
     required: true,
     format: "#### #### #### ####",
     mask: "_",
@@ -49,10 +48,9 @@ export const configFormAddCard = [
     fieldName: "exp_date",
     type: "text",
     placeholder: "Expire date",
-    // validationMethods: [validatingFunctions.checkExpireDate],
     validationMethods: Yup.string()
-      .required("Required")
-      .test("date", "wrong date", (value) => (value ? /^[0-9]{2}\/[0-9]{2}$/.test(value) : false)),
+      .test("date", "wrong date", (value) => (value ? /^[0-9]{2}\/[0-9]{2}$/.test(value) : false))
+      .required("Required"),
     required: true,
     format: cardExpiry,
     mask: "",
@@ -61,8 +59,7 @@ export const configFormAddCard = [
     fieldName: "cvv",
     type: "text",
     placeholder: "CVV",
-    // validationMethods: [validatingFunctions.checkCvv],
-    validationMethods: Yup.string().required("Required").length(3, "wrong cvv"),
+    validationMethods: Yup.string().length(3, "wrong cvv").required("Required"),
     required: true,
     format: "###",
     mask: "",

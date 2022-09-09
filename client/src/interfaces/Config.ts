@@ -1,13 +1,12 @@
+import { FormatInputValueFunction } from "react-number-format";
 import { StringSchema } from "yup";
-
-export * as Yup from "yup";
 
 export interface Config {
   fieldName: string;
   type: string;
   placeholder: string;
-  validationMethods: Function[] | any;
+  validationMethods: StringSchema;
   required?: boolean;
-  format?: string | any;
+  format?: string | FormatInputValueFunction;
   mask?: string;
 }

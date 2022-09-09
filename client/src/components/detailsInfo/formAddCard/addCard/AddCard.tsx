@@ -9,7 +9,6 @@ import { configFormAddCard } from "../configFormAddCard/configFormAddCard";
 import { Card } from "../../../../interfaces/Card";
 
 import FormAddCard from "../FormAddCard";
-import { FormikValues } from "formik";
 
 const AddCard: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();

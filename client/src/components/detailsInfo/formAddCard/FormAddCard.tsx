@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 
-import { getAddCardInfo, getCards, saveCard, setAddCard, setCurrentCard } from "../../../features/cards/cardsSlice";
+import { getAddCardInfo, setCurrentCard } from "../../../features/cards/cardsSlice";
 
-import FormBuilder from "../../utilityComponents/formBuilder/FormBuilder";
 import { Card } from "../../../interfaces/Card";
+import { Config } from "../../../interfaces/Config";
+
 import FormFormik from "../../utilityComponents/formFormik/FormFormik";
 import { FormikValues } from "formik";
 
 interface Props {
-  config: any;
+  config: Config[];
   formName: string;
   formActionName: string;
   autoFill?: Card;
@@ -18,7 +19,6 @@ interface Props {
 const FormAddCard: React.FC<Props> = ({ config, formName, formActionName, autoFill }): JSX.Element => {
   const dispatch = useAppDispatch();
 
-  const currentCard: Card | null = useAppSelector((state) => state.cards.currentCard);
   const addCardInfo: { scheme: string; type: string } | null = useAppSelector((state) => state.cards.addCardInfo);
 
   const [currentValues, setCurrentValues] = useState<Card>();
