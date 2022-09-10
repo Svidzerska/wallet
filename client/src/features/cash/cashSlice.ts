@@ -5,13 +5,13 @@ import { Cash } from "../../interfaces/Cash";
 
 interface InitialState {
   isAddCash: boolean;
-  cashFromServer: Cash[];
+  cashFromServer: { result: Cash[]; message: string | null };
   editingPocket: Cash;
 }
 
 const initialState: InitialState = {
   isAddCash: false,
-  cashFromServer: [],
+  cashFromServer: { result: [], message: null },
   editingPocket: {},
 };
 
@@ -50,13 +50,13 @@ export const cashSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getCash.fulfilled, (state, action) => {
-      state.cashFromServer = action.payload;
+      state.cashFromServer = { result: action.payload, message: null };
     });
     builder.addCase(getCash.pending, (state, _action) => {
-      state.cashFromServer = [];
+      state.cashFromServer = { result: [], message: "Loarding..." };
     });
     builder.addCase(getCash.rejected, (state, _action) => {
-      state.cashFromServer = [];
+      state.cashFromServer = { result: [], message: "Something was wrong" };
     });
   },
 });

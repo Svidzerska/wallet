@@ -41,6 +41,10 @@
     justify-content: space-between;
     padding: 0;
 
+    p {
+      margin-left: 10px;
+    }
+
     .cardShortInfo {
       display: flex;
       flex-direction: row;
