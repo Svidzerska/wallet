@@ -113,6 +113,8 @@ const GeneralInfo: React.FC = (): JSX.Element => {
     );
   });
 
+  console.log(cashFromServer.message);
+
   return (
     <section className="generalInfo__section">
       <h3 className="balance">Баланс</h3>
@@ -122,7 +124,13 @@ const GeneralInfo: React.FC = (): JSX.Element => {
       <div className="money">{cashFromServer.message ? <p>{cashFromServer.message}</p> : allMoney}</div>
       <section className="cash">
         <h3 className="cashName">Готівка</h3>
-        {cashFromServer.message ? <p>{cashFromServer.message}</p> : cashPocketAmount}
+        {cashFromServer.message ? (
+          <p>{cashFromServer.message}</p>
+        ) : cashPocketAmount.length !== 0 ? (
+          cashPocketAmount
+        ) : (
+          <p>Не додано жодної інформації про готівку</p>
+        )}
       </section>
       <h3 className="cards">Мої Картки</h3>
       <ul>{cardsList.length !== 0 ? cardsList : <p>Не додано жодної картки</p>}</ul>

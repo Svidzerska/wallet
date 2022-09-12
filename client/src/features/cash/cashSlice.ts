@@ -50,7 +50,11 @@ export const cashSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getCash.fulfilled, (state, action) => {
-      state.cashFromServer = { result: action.payload, message: null };
+      console.log(action.payload);
+      state.cashFromServer = {
+        result: action.payload,
+        message: action.payload.length !== 0 ? null : "Не додано жодної інформації про готівку",
+      };
     });
     builder.addCase(getCash.pending, (state, _action) => {
       state.cashFromServer = { result: [], message: "Loarding..." };
