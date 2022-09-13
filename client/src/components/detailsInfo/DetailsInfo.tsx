@@ -18,7 +18,9 @@ const DetailsInfo: React.FC = (): JSX.Element => {
 
   const isAddCard: boolean = useAppSelector((state) => state.cards.isAddCard);
   const editingCard: Card | null = useAppSelector((state) => state.cards.editingCard);
-  const cardsFromServer: Card[] = useAppSelector((state) => state.cards.cardsFromServer);
+  const cardsFromServer: { result: Card[]; message: string | null } = useAppSelector(
+    (state) => state.cards.cardsFromServer
+  );
 
   const isAddCash: boolean = useAppSelector((state) => state.cash.isAddCash);
 
@@ -49,7 +51,7 @@ const DetailsInfo: React.FC = (): JSX.Element => {
     dispatch(deleteCard(e.currentTarget.id)).then(() => dispatch(getCards()));
   };
 
-  const cardsList: JSX.Element[] = cardsFromServer.map((card: Card, index: number) => {
+  const cardsList: JSX.Element[] = cardsFromServer.result.map((card: Card, index: number) => {
     return (
       <li key={`${card.id}`} className="cardElement">
         <CardComponent
@@ -82,7 +84,15 @@ const DetailsInfo: React.FC = (): JSX.Element => {
           <button onClick={addCash} className="addCardButton">
             Додати готівку
           </button>
-          <ul className="cardList">{cardsList}</ul>
+          <ul className="cardList">
+            {cardsFromServer.message ? (
+              <p>{cardsFromServer.message}</p>
+            ) : cardsList.length !== 0 ? (
+              cardsList
+            ) : (
+              <p>Не додано жодної картки</p>
+            )}
+          </ul>
         </section>
       )}
       {isAddCash && <AddCash />}

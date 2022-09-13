@@ -8,7 +8,7 @@ interface InitialState {
   editingCard: Card | null;
   currentCard: Card | null;
   savedCard: Card | null;
-  cardsFromServer: Card[];
+  cardsFromServer: { result: Card[]; message: string | null };
   addCardInfo: { scheme: string; type: string } | null;
   deletedCard: string;
   editedCard: string;
@@ -19,7 +19,7 @@ const initialState: InitialState = {
   editingCard: null,
   currentCard: null,
   savedCard: null,
-  cardsFromServer: [],
+  cardsFromServer: { result: [], message: "Send request..." },
   addCardInfo: null,
   deletedCard: "",
   editedCard: "",
@@ -87,13 +87,13 @@ export const cardsSlice = createSlice({
     });
 
     builder.addCase(getCards.fulfilled, (state, action) => {
-      state.cardsFromServer = action.payload;
+      state.cardsFromServer = { result: action.payload, message: null };
     });
     builder.addCase(getCards.pending, (state, _action) => {
-      state.cardsFromServer = [];
+      state.cardsFromServer = { result: [], message: "Loarding..." };
     });
     builder.addCase(getCards.rejected, (state, _action) => {
-      state.cardsFromServer = [];
+      state.cardsFromServer = { result: [], message: "Something was wrong!" };
     });
 
     builder.addCase(getAddCardInfo.fulfilled, (state, action) => {

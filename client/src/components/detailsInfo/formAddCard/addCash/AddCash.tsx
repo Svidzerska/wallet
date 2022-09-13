@@ -15,7 +15,7 @@ import FormFormik from "../../../utilityComponents/formFormik/FormFormik";
 const AddCash: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
-  const cashFromServer: { result: Cash[]; message: string | null } = useAppSelector(
+  const cashFromServer: { result: Cash[] | null; message: string | null } = useAppSelector(
     (state) => state.cash.cashFromServer
   );
   const editingPocket: Cash | null = useAppSelector((state) => state.cash.editingPocket);
@@ -27,7 +27,7 @@ const AddCash: React.FC = (): JSX.Element => {
     dispatch(setEditingPocket({}));
 
     const currency = values?.currency ? values?.currency : "UAH";
-    const cashPocket = cashFromServer.result.find((pocket) => pocket.currency === currency);
+    const cashPocket = cashFromServer.result?.find((pocket) => pocket.currency === currency);
     cashPocket && editAmount
       ? dispatch(editCash({ ...values, currency })).then(() => dispatch(getCash()))
       : dispatch(saveCash({ ...values, currency })).then(() => dispatch(getCash()));

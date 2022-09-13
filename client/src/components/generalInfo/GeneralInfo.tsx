@@ -12,7 +12,9 @@ import "./generalInfo.scss";
 const GeneralInfo: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
-  const cardsFromServer: Card[] = useAppSelector((state) => state.cards.cardsFromServer);
+  const cardsFromServer: { result: Card[]; message: string | null } = useAppSelector(
+    (state) => state.cards.cardsFromServer
+  );
   const cashFromServer: { result: Cash[]; message: string | null } = useAppSelector(
     (state) => state.cash.cashFromServer
   );
@@ -40,8 +42,10 @@ const GeneralInfo: React.FC = (): JSX.Element => {
   };
 
   useEffect(() => {
-    console.log(cashFromServer);
-    const currencies: string[] = [...cardsFromServer, ...cashFromServer.result].map((pocket) => pocket.currency!);
+    console.log(cashFromServer, cardsFromServer);
+    const currencies: string[] = [...cardsFromServer.result, ...cashFromServer.result].map(
+      (pocket) => pocket.currency!
+    );
     const uniqCurrencies = currencies.filter((currency, id) => currencies.indexOf(currency) === id);
     const uniqOrderCurrencies = orderCurrencies.filter((defaultCurrency) => uniqCurrencies.includes(defaultCurrency));
     setUniqCurrencies(uniqOrderCurrencies);
@@ -53,12 +57,12 @@ const GeneralInfo: React.FC = (): JSX.Element => {
 
   const handleEditCard = (e: React.MouseEvent<HTMLButtonElement>): void => {
     dispatch(setAddCard(true));
-    const editingCard = cardsFromServer.find((card) => card.id === e.currentTarget.id);
+    const editingCard = cardsFromServer.result.find((card) => card.id === e.currentTarget.id);
     dispatch(setEditingCard(editingCard!));
     dispatch(setCurrentCard(null));
   };
 
-  const cardsList: JSX.Element[] = cardsFromServer.map((card: Card) => {
+  const cardsList: JSX.Element[] = cardsFromServer.result.map((card: Card) => {
     return (
       <li key={`${card.id}`} className="cardShortInfo">
         <div>
@@ -86,7 +90,7 @@ const GeneralInfo: React.FC = (): JSX.Element => {
     if (currency) {
       return (
         <p key={currency}>
-          - {sum(cardsFromServer, cashFromServer.result, currency)} {currency}
+          - {sum(cardsFromServer.result, cashFromServer.result, currency)} {currency}
         </p>
       );
     } else {
@@ -94,7 +98,7 @@ const GeneralInfo: React.FC = (): JSX.Element => {
     }
   });
 
-  const cashPocketAmount: JSX.Element[] = cashFromServer.result.map((pocket, index) => {
+  const cashPocketAmount: JSX.Element[] | undefined = cashFromServer.result?.map((pocket, index) => {
     return (
       <div key={pocket.currency}>
         <p>
@@ -113,7 +117,7 @@ const GeneralInfo: React.FC = (): JSX.Element => {
     );
   });
 
-  console.log(cashFromServer.message);
+  console.log(cashFromServer.message && cashFromServer.message);
 
   return (
     <section className="generalInfo__section">
@@ -121,7 +125,15 @@ const GeneralInfo: React.FC = (): JSX.Element => {
       {/* <div className="money">
         {allMoney.length !== 0 ? allMoney : <p>Не додано жодної картки чи інформації про готівку</p>}
         </div> */}
-      <div className="money">{cashFromServer.message ? <p>{cashFromServer.message}</p> : allMoney}</div>
+      <div className="money">
+        {cashFromServer.message || cardsFromServer.message ? (
+          <p>{cashFromServer.message || cardsFromServer.message}</p>
+        ) : allMoney.length !== 0 ? (
+          allMoney
+        ) : (
+          <p>Не додано жодної картки чи інформації про готівку</p>
+        )}
+      </div>
       <section className="cash">
         <h3 className="cashName">Готівка</h3>
         {cashFromServer.message ? (
@@ -129,11 +141,19 @@ const GeneralInfo: React.FC = (): JSX.Element => {
         ) : cashPocketAmount.length !== 0 ? (
           cashPocketAmount
         ) : (
-          <p>Не додано жодної інформації про готівку</p>
+          <p>Не додано інформації про готівку</p>
         )}
       </section>
       <h3 className="cards">Мої Картки</h3>
-      <ul>{cardsList.length !== 0 ? cardsList : <p>Не додано жодної картки</p>}</ul>
+      <ul>
+        {cardsFromServer.message ? (
+          <p>{cardsFromServer.message}</p>
+        ) : cardsList.length !== 0 ? (
+          cardsList
+        ) : (
+          <p>Не додано жодної картки</p>
+        )}
+      </ul>
     </section>
   );
 };

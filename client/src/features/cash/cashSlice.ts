@@ -11,7 +11,7 @@ interface InitialState {
 
 const initialState: InitialState = {
   isAddCash: false,
-  cashFromServer: { result: [], message: null },
+  cashFromServer: { result: [], message: "Send request..." },
   editingPocket: {},
 };
 
@@ -53,14 +53,14 @@ export const cashSlice = createSlice({
       console.log(action.payload);
       state.cashFromServer = {
         result: action.payload,
-        message: action.payload.length !== 0 ? null : "Не додано жодної інформації про готівку",
+        message: null,
       };
     });
     builder.addCase(getCash.pending, (state, _action) => {
       state.cashFromServer = { result: [], message: "Loarding..." };
     });
     builder.addCase(getCash.rejected, (state, _action) => {
-      state.cashFromServer = { result: [], message: "Something was wrong" };
+      state.cashFromServer = { result: [], message: "Something was wrong!" };
     });
   },
 });
