@@ -25,10 +25,6 @@ const DetailsInfo: React.FC = (): JSX.Element => {
   const isAddCash: boolean = useAppSelector((state) => state.cash.isAddCash);
 
   useEffect(() => {
-    console.log(cardsFromServer);
-  }, [cardsFromServer]);
-
-  useEffect(() => {
     document.body.style.overflow = isAddCash ? "hidden" : "auto";
   }, [isAddCash]);
 
@@ -47,7 +43,6 @@ const DetailsInfo: React.FC = (): JSX.Element => {
   };
 
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement>): void => {
-    console.log(e.currentTarget.id);
     dispatch(deleteCard(e.currentTarget.id)).then(() => dispatch(getCards()));
   };
 

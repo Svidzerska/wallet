@@ -42,7 +42,6 @@ const GeneralInfo: React.FC = (): JSX.Element => {
   };
 
   useEffect(() => {
-    console.log(cashFromServer, cardsFromServer);
     const currencies: string[] = [...cardsFromServer.result, ...cashFromServer.result].map(
       (pocket) => pocket.currency!
     );
@@ -117,14 +116,9 @@ const GeneralInfo: React.FC = (): JSX.Element => {
     );
   });
 
-  console.log(cashFromServer.message && cashFromServer.message);
-
   return (
     <section className="generalInfo__section">
       <h3 className="balance">Баланс</h3>
-      {/* <div className="money">
-        {allMoney.length !== 0 ? allMoney : <p>Не додано жодної картки чи інформації про готівку</p>}
-        </div> */}
       <div className="money">
         {cashFromServer.message || cardsFromServer.message ? (
           <p>{cashFromServer.message || cardsFromServer.message}</p>
